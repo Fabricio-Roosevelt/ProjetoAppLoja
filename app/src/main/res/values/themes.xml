@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ProjetoAppLoja" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ProjetoAppLoja" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/Primeira</item>
+        <item name="colorSecondary">@color/Secunda</item>
+        <item name="colorOnPrimary">@color/Terceira</item>
+        <item name="colorOnSecondary">@color/Terceira</item>
     </style>
 
     <style name="Theme.ProjetoAppLoja" parent="Base.Theme.ProjetoAppLoja" />
