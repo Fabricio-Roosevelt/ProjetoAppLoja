@@ -5,8 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.android.material.snackbar.Snackbar
 
 class MensagemAdapter(
 
@@ -21,6 +25,8 @@ class MensagemAdapter(
         listaMensagens.add(
             Mensagem("Novo ITEM", "Deu certo", "01/02/2020")
         )
+        //Toast.makeText(this, "ITEM COM SUCESSO", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Item adicionado com sucesso.", Toast.LENGTH_SHORT).show()
         listaMensagens = lista
 
         // atualiza apenas o modificado - RECOMENDADO
@@ -32,14 +38,18 @@ class MensagemAdapter(
     // editar item da lista
     fun editarListaDados(lista: MutableList<Mensagem>){
         listaMensagens[0] = Mensagem("Maria", "Boa tarde", "25/05/2023")
+        //Toast.makeText(this, "Item editado com sucesso.", Toast.LENGTH_SHORT).show()
         notifyItemChanged(0)
     }
 
     // remover item da lista
     fun excluirItemListaDados(Lista: MutableList<Mensagem>){
         listaMensagens.removeAt(1)
+
         notifyItemRemoved(1)
     }
+
+
 
     inner class MensagemViewHolder(
         val itemView: View
@@ -65,6 +75,11 @@ class MensagemAdapter(
             }
         }
 
+        fun editarPerfil(){
+
+        }
+
+
     }
 
     // Ao criar ViewHolder - cria a visualização
@@ -87,5 +102,20 @@ class MensagemAdapter(
     // Recupera a quantidade de itens
     override fun getItemCount(): Int {
         return listaMensagens.size
+    }
+
+    fun confirmarExclusao(view: View?) {
+        /*val alertBuider = AlertDialog.Builder(this)
+        alertBuider.setTitle("Confirmar exclusão do item!")
+        alertBuider.setMessage("Tem certeza disso?")
+        alertBuider.setNegativeButton("cancelar"){dialog, posicao ->
+            //Toast.makeText(this, "Cancelar", Toast.LENGTH_SHORT).show()
+            //dialog.cancel()
+        }
+        alertBuider.setPositiveButton("Excluir"){dialog, posicao ->
+            //Toast.makeText(this, "Item excluido", Toast.LENGTH_SHORT).show()
+            //dialog.cancel()
+        }*/
+
     }
 }
