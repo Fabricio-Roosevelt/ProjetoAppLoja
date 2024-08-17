@@ -3,20 +3,67 @@ package com.example.projetoapploja
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
 class MensagemAdapter(
-    private val lista: List<Mensagem>
+
+    private val clique: (String) -> Unit   // dados para enviar no clique
 ) : Adapter<MensagemAdapter.MensagemViewHolder>() {
+
+    // atauliza a lista de nomes e mensagens
+    private var listaMensagens = mutableListOf<Mensagem>()
+
+    // atualizando a lista
+    fun atualizarListaDados(lista: MutableList<Mensagem>){
+        listaMensagens.add(
+            Mensagem("Novo ITEM", "Deu certo", "01/02/2020")
+        )
+        listaMensagens = lista
+
+        // atualiza apenas o modificado - RECOMENDADO
+        notifyItemInserted(listaMensagens.size)
+        // atualiza toda a lista - NÃO RECOMENDADO
+        //notifyDataSetChanged()
+    }
+
+    // editar item da lista
+    fun editarListaDados(lista: MutableList<Mensagem>){
+        listaMensagens[0] = Mensagem("Maria", "Boa tarde", "25/05/2023")
+        notifyItemChanged(0)
+    }
+
+    // remover item da lista
+    fun excluirItemListaDados(Lista: MutableList<Mensagem>){
+        listaMensagens.removeAt(1)
+        notifyItemRemoved(1)
+    }
 
     inner class MensagemViewHolder(
         val itemView: View
     ) : ViewHolder(itemView){
+        // elementos da tela
         val textNome: TextView = itemView.findViewById(R.id.text_nome)
         val textDescricao: TextView = itemView.findViewById(R.id.text_descricao)
         val textData: TextView = itemView.findViewById(R.id.text_data)
+        val imagemPerfil: ImageView = itemView.findViewById(R.id.image_perfil)
+        //val retorno: ItemView = itemView.findViewById(R.id.ver_perfil)
+
+        // funcao para executar e exibir eventos na tela
+        fun bind(mensagem: Mensagem){
+            textNome.text = mensagem.nome
+            textDescricao.text = mensagem.descricao
+            textData.text = mensagem.data
+
+            // Aplicando eventos de clique
+            //val context = imagemPerfil.context
+            imagemPerfil.setOnClickListener {
+                clique(mensagem.nome)
+                //Toast.makeText(context, "Deu certo, valeu ${mensagem.nome}", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 
@@ -30,17 +77,15 @@ class MensagemAdapter(
     }
 
     // ao vincular os dados para a visualização ( view holder)
-    override fun onBindViewHolder(mensagemViewHolder: MensagemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MensagemViewHolder, position: Int) {
 
-        val mensagem = lista[position]
-        mensagemViewHolder.textNome.text = mensagem.nome
-        mensagemViewHolder.textDescricao.text = mensagem.descricao
-        mensagemViewHolder.textData.text = mensagem.data
+        val mensagem = listaMensagens[position]
+        holder.bind(mensagem)
 
     }
 
     // Recupera a quantidade de itens
     override fun getItemCount(): Int {
-        return lista.size
+        return listaMensagens.size
     }
 }
