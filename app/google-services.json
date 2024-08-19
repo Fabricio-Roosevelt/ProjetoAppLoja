@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "578723667567",
+    "project_id": "projetoapploja-59e8e",
+    "storage_bucket": "projetoapploja-59e8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578723667567:android:edd7250dd8744a3e55b79a",
+        "android_client_info": {
+          "package_name": "com.example.projetoapploja"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzbBHTLGVzHfMo-GgwETltVjSfFbTWeeY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

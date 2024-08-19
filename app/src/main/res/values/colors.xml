@@ -4,9 +4,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Novas cores -->
-    <color name="Primeira">#00606C</color>
-    <color name="Secunda">#0698AA</color>
-    <color name="Terceira">#02DBF6</color>
+    <color name="Primeira">#77020C</color>
+    <color name="Secunda">#CC0006</color>
+    <color name="Terceira">#F11A21</color>
+    <color name="Back">#E36467</color>
     <color name="Quarta">#8EF2FF</color>
     <color name="Fundo">#012E33</color>
 </resources>

@@ -13,13 +13,17 @@
         android:theme="@style/Theme.ProjetoAppLoja"
         tools:targetApi="31">
         <activity
-            android:name=".FormularioActivity"
+            android:name=".CadastroActivity"
+            android:exported="false"
+            android:parentActivityName=".LoginActivity" />
+        <activity
+            android:name=".TelaRecycleViewActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".TelaRecycleViewActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
