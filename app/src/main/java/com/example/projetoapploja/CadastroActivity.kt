@@ -1,12 +1,14 @@
 package com.example.projetoapploja
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.projetoapploja.databinding.ActivityCadastroBinding
 
 
@@ -19,6 +21,8 @@ class CadastroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        //supportActionBar?.hide()   // retirar actionbar da tela
+
         binding.btnEnviar.setOnClickListener {
             radioButtonTipoOculos()
             radioButtonGeneroOculos()
@@ -26,10 +30,42 @@ class CadastroActivity : AppCompatActivity() {
         }
 
         inicializarToolbar()
-
         spinnerMarca()
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu_principal, menu)
+        supportActionBar?.apply {
+            title = "Cadastre um produto"
+            setDisplayHomeAsUpEnabled(true)
+        }
+        /*binding.includeToolbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId){
+                R.id.itemPesquisar -> {
+                    Toast.makeText(this, "Oesquisar", Toast.LENGTH_SHORT).show()
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.itemAdicionar -> {
+                    Toast.makeText(this, "Adicionar", Toast.LENGTH_SHORT).show()
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.itemEditar -> {
+                    Toast.makeText(this, "Editar", Toast.LENGTH_SHORT).show()
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.itemSair -> {
+                    Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show()
+                    return@setOnMenuItemClickListener true
+                }else -> {
+                    return@setOnMenuItemClickListener true
+                }
+            }
+        }*/
+
+        return true
     }
 
     private fun spinnerSelecionarItem() {
@@ -53,22 +89,6 @@ class CadastroActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item,
             marcas
         )
-
-        binding.spinnerMarcas.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-        }
 
     }
 
@@ -97,11 +117,18 @@ class CadastroActivity : AppCompatActivity() {
     }
 
     private fun inicializarToolbar() {
-        val toolbar = binding.includeToolbar.tbPrincipal
+        val toolbar = binding.includeToolbar.tbAlternativa
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
+        binding.includeToolbar.tbAlternativa.setTitleTextColor(
+            ContextCompat.getColor(this,R.color.white)
+        )
+        binding.includeToolbar.tbAlternativa.overflowIcon.apply {
+            getColor(R.color.white)
+        }
+
+        /*supportActionBar?.apply {
             title = "Cadastre um produto"
             setDisplayHomeAsUpEnabled(true)
-        }
+        }*/
     }
 }

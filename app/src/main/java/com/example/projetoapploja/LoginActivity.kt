@@ -20,6 +20,10 @@ class LoginActivity : AppCompatActivity() {
 
         inicializarEventosClique()
 
+        binding.btnEntrar.setOnClickListener {
+            startActivity(Intent(this, ActivityMainBinding::class.java))
+        }
+
     }
 
     private fun inicializarEventosClique() {

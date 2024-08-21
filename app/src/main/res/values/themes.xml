@@ -6,6 +6,13 @@
         <item name="colorSecondary">@color/Secunda</item>
         <item name="colorOnPrimary">@color/Terceira</item>
         <item name="colorOnSecondary">@color/Terceira</item>
+        <item name="actionOverflowButtonStyle">@style/ActionOverflowButton</item>
+        <item name="navigationIconTint">@color/white</item>
+    </style>
+
+    <style name="ActionOverflowButton"
+        parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="tint">@color/white</item>
     </style>
 
     <style name="Theme.ProjetoAppLoja" parent="Base.Theme.ProjetoAppLoja" />
