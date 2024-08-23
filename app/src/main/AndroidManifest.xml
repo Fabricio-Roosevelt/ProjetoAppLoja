@@ -13,6 +13,17 @@
         android:theme="@style/Theme.ProjetoAppLoja"
         tools:targetApi="31">
         <activity
+            android:name=".PesquisaActivity"
+            android:parentActivityName=".PrimeiraTelaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:parentActivityName=".PrimeiraTelaActivity" />
+        <activity
+            android:name=".TesteActivity"
+            android:exported="false" />
+        <activity
             android:name=".CadastroActivity"
             android:exported="false"
             android:parentActivityName=".LoginActivity" />
@@ -21,9 +32,10 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".LoginActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".PrimeiraTelaActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

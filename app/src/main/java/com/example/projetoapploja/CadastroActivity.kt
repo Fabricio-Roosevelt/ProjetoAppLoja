@@ -23,7 +23,7 @@ class CadastroActivity : AppCompatActivity() {
 
         //supportActionBar?.hide()   // retirar actionbar da tela
 
-        binding.btnEnviar.setOnClickListener {
+        binding.btnPesquisaComFiltro.setOnClickListener {
             radioButtonTipoOculos()
             radioButtonGeneroOculos()
             spinnerSelecionarItem()
@@ -31,7 +31,6 @@ class CadastroActivity : AppCompatActivity() {
 
         inicializarToolbar()
         spinnerMarca()
-
 
     }
 
@@ -42,6 +41,12 @@ class CadastroActivity : AppCompatActivity() {
             title = "Cadastre um produto"
             setDisplayHomeAsUpEnabled(true)
         }
+        menuInflater.inflate(R.menu.menu_alternativo, menu)
+        supportActionBar?.apply {
+            title = "Cadastre um produto"
+            setDisplayHomeAsUpEnabled(true)
+        }
+
         /*binding.includeToolbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId){
                 R.id.itemPesquisar -> {
@@ -66,6 +71,8 @@ class CadastroActivity : AppCompatActivity() {
         }*/
 
         return true
+
+
     }
 
     private fun spinnerSelecionarItem() {
@@ -89,7 +96,6 @@ class CadastroActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item,
             marcas
         )
-
     }
 
     private fun radioButtonGeneroOculos() {

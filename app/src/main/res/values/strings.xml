@@ -2,4 +2,13 @@
     <string name="app_name">App Otica</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="marcas">
+        <item>RayBan</item>
+        <item>Guess</item>
+        <item>Ana Hickman</item>
+        <item>Ferrari</item>
+        <item>Platini</item>
+        <item>Outras</item>
+    </string-array>
 </resources>

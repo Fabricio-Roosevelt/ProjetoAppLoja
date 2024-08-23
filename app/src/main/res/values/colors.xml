@@ -10,4 +10,6 @@
     <color name="Back">#E36467</color>
     <color name="Quarta">#8EF2FF</color>
     <color name="Fundo">#012E33</color>
+    <color name="Cinza">#D6D6D6</color>
+    <color name="CinzaEscuro">#5A5959</color>
 </resources>
