@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/itemPesquisar"
+        android:icon="@drawable/ic_search_24"
+        android:title="Pesquisar" />
+
+    <item
+        android:id="@+id/itemEditar"
+        android:icon="@drawable/ic_edit_24"
+        android:title="Editar" />
+    <item
         android:id="@+id/itemSair"
-        android:icon="@drawable/ic_oculos"
-        android:title="Sair"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_exit_to_app_24"
+        android:title="Sair" />
+
 
 </menu>

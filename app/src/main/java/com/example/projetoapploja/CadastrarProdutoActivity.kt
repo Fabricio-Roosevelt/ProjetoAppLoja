@@ -1,60 +1,47 @@
 package com.example.projetoapploja
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.View
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.projetoapploja.databinding.ActivityCadastroBinding
+import com.example.projetoapploja.databinding.ActivityCadastrarProdutoBinding
 
 
-class CadastroActivity : AppCompatActivity() {
+class CadastrarProdutoActivity : AppCompatActivity() {
 
     private val binding by lazy {
-        ActivityCadastroBinding.inflate(layoutInflater)
+        ActivityCadastrarProdutoBinding.inflate(layoutInflater)
     }
+    var listaCadastro = mutableMapOf("marca" to "", "tipo" to "", "sexo" to "")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         //supportActionBar?.hide()   // retirar actionbar da tela
 
-        binding.btnPesquisaComFiltro.setOnClickListener {
+        binding.btnPesquisa.setOnClickListener {
+            spinnerCadastrarItem()
             radioButtonTipoOculos()
             radioButtonGeneroOculos()
-            spinnerSelecionarItem()
         }
-
         inicializarToolbar()
         spinnerMarca()
 
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        menuInflater.inflate(R.menu.menu_principal, menu)
-        supportActionBar?.apply {
-            title = "Cadastre um produto"
-            setDisplayHomeAsUpEnabled(true)
-        }
         menuInflater.inflate(R.menu.menu_alternativo, menu)
         supportActionBar?.apply {
             title = "Cadastre um produto"
             setDisplayHomeAsUpEnabled(true)
         }
-
-        /*binding.includeToolbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
+        binding.includeToolbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId){
                 R.id.itemPesquisar -> {
-                    Toast.makeText(this, "Oesquisar", Toast.LENGTH_SHORT).show()
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.itemAdicionar -> {
-                    Toast.makeText(this, "Adicionar", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, PesquisaActivity::class.java))
                     return@setOnMenuItemClickListener true
                 }
                 R.id.itemEditar -> {
@@ -62,28 +49,24 @@ class CadastroActivity : AppCompatActivity() {
                     return@setOnMenuItemClickListener true
                 }
                 R.id.itemSair -> {
-                    Toast.makeText(this, "Sair", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, PrimeiraTelaActivity::class.java))
                     return@setOnMenuItemClickListener true
                 }else -> {
                     return@setOnMenuItemClickListener true
                 }
             }
-        }*/
-
+        }
         return true
-
-
     }
 
-    private fun spinnerSelecionarItem() {
-        val marcaSelecionada = binding.spinnerMarcas.selectedItem
+    private fun spinnerCadastrarItem() {
+        val marcaSelecionada = binding.spinnerMarcas.selectedItem.toString()
         val marcaPosicao = binding.spinnerMarcas.selectedItemPosition
-        if (marcaPosicao == 0){
-            Toast.makeText(this, "Selecione um item da lista", Toast.LENGTH_SHORT).show()
-            binding.textMarca.text = "Selecione um item"
-        }else{
-            binding.textMarca.text = "Selecionado: $marcaSelecionada - pos: $marcaPosicao"
+        if (marcaPosicao != 0) {
+            listaCadastro.put("marca", marcaSelecionada)
         }
+
+        binding.spinnerMarcas.setSelection(0)
     }
 
     private fun spinnerMarca() {
@@ -108,18 +91,20 @@ class CadastroActivity : AppCompatActivity() {
             R.id.rbInfantil -> itemSelecionado = "Infantil"
             else -> itemSelecionado = "Nenhum item selecionado"
         }
-        binding.textGenero.text = itemSelecionado
-
-        // binding.rgSexo.clearCheck()  // limpar check-box
+        listaCadastro.put("sexo", itemSelecionado)
+        binding.textSaida.text = listaCadastro.toString()   // retirar no final
+        binding.rgSexo.clearCheck()  // limpar check-box
     }
 
     private fun radioButtonTipoOculos() {
-        val tipoSelecionadoGrau = binding.rbOculosGrau.isChecked
-        if ( tipoSelecionadoGrau){
-            binding.textTipo.text = "Oculos de grau"
-        }else{
-            binding.textTipo.text = "Oculos de sol"
+        val idtipoSelecionadoGrau = binding.rgTipoOculos.checkedRadioButtonId
+        val tipoSelecionadoGrau: String?
+        when( idtipoSelecionadoGrau) {
+            R.id.rbOculosGrau -> tipoSelecionadoGrau = "Oculus de grau"
+            R.id.rbOculosSolar -> tipoSelecionadoGrau = "Oculos solar"
+            else -> tipoSelecionadoGrau = "Nenhum item selecionado"
         }
+        listaCadastro.put("tipo", tipoSelecionadoGrau)
     }
 
     private fun inicializarToolbar() {
@@ -131,7 +116,6 @@ class CadastroActivity : AppCompatActivity() {
         binding.includeToolbar.tbAlternativa.overflowIcon.apply {
             getColor(R.color.white)
         }
-
         /*supportActionBar?.apply {
             title = "Cadastre um produto"
             setDisplayHomeAsUpEnabled(true)

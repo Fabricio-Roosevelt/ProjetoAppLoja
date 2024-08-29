@@ -21,16 +21,13 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Pesquisa com Filtros"
+        android:layout_marginTop="24dp"
+        android:text="Pesquisa Detalhada"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/includeToolBar" />
 
@@ -39,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Informe a marca do produto"
         android:textSize="16sp"
@@ -58,8 +55,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/black"
-        android:textColor="@color/black"
         android:popupBackground="@color/white"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,13 +177,16 @@
         app:layout_constraintTop_toBottomOf="@+id/rgSexo" />
 
     <Button
-        android:id="@+id/btnVoltar"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_voltar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="Voltar"
         android:textColor="@color/white"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/ic_arrow_back_24"
+        app:iconTint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/btnCancelar"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -194,29 +194,32 @@
 
     <Button
         android:id="@+id/btnCancelar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Cancelar"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/btnPesquisaNome"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnVoltar"
+        app:layout_constraintStart_toEndOf="@+id/btn_voltar"
         app:layout_constraintTop_toBottomOf="@+id/btnPesquisaComFiltro" />
 
     <Button
-        android:id="@+id/btnPesquisaNome"
+        android:id="@+id/btnPesquisaGenerica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Pesquisar por Nome"
+        android:backgroundTint="@color/secundaria"
+        android:text="Pesquisa Genérica"
         android:textColor="@color/white"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelar"
-        app:layout_constraintTop_toBottomOf="@+id/btnPesquisaComFiltro" />
+        app:layout_constraintStart_toEndOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/textView13" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

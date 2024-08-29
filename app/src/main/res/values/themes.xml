@@ -2,10 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ProjetoAppLoja" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/Primeira</item>
-        <item name="colorSecondary">@color/Secunda</item>
-        <item name="colorOnPrimary">@color/Terceira</item>
-        <item name="colorOnSecondary">@color/Terceira</item>
+        <item name="colorPrimary">@color/primaria</item>
+        <item name="colorPrimaryVariant">@color/primaria_variacao</item>
+        <item name="colorOnPrimary">@color/terceira</item>
+        <item name="colorSecondary">@color/secundaria</item>
+        <item name="colorSecondaryVariant">@color/secundaria_variacao</item>
+        <item name="colorOnSecondary">@color/terceira</item>
         <item name="actionOverflowButtonStyle">@style/ActionOverflowButton</item>
         <item name="navigationIconTint">@color/white</item>
     </style>

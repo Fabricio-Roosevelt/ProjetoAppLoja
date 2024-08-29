@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.projetoapploja.databinding.ActivityCadastroBinding
 import com.example.projetoapploja.databinding.ActivityTesteBinding
 
 
@@ -39,7 +38,7 @@ class TesteActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        menuInflater.inflate(R.menu.menu_alternativo, menu)
+        menuInflater.inflate(R.menu.menu_teste, menu)
         supportActionBar?.apply {
             title = "Cadastre um produto"
             setDisplayHomeAsUpEnabled(true)

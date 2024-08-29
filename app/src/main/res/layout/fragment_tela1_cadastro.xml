@@ -152,7 +152,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/btnPesquisaComFiltro"
+        android:id="@+id/btn_pesquisa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -163,14 +163,14 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         app:cornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/textTipo"
+        app:layout_constraintBottom_toTopOf="@+id/textSaida"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgSexo" />
 
     <TextView
-        android:id="@+id/textTipo"
+        android:id="@+id/textSaida"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -178,7 +178,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPesquisaComFiltro" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_pesquisa" />
 
     <TextView
         android:id="@+id/textGenero"
@@ -189,7 +189,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textTipo" />
+        app:layout_constraintTop_toBottomOf="@+id/textSaida" />
 
     <TextView
         android:id="@+id/textMarca"

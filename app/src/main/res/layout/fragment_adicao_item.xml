@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".fragments.AdicaoItemFragment">
 
-    <TextView
-        android:id="@+id/textView8"
+    <Button
+        android:id="@+id/btnAdicao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Adicao" />
+        android:text="Button" />
 </FrameLayout>

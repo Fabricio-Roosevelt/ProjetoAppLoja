@@ -29,7 +29,15 @@ class MainActivity : AppCompatActivity() {
 
         inicializarToolbar()
         abrirFragmentPesquisa()
+        //abrirFragmentContatos()
+    }
 
+    private fun abrirFragmentContatos() {
+        // inicializar Fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_conteudo, AdicaoItemFragment())
+            .commit()
     }
 
     private fun abrirFragmentPesquisa() {

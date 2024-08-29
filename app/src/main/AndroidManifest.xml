@@ -13,9 +13,20 @@
         android:theme="@style/Theme.ProjetoAppLoja"
         tools:targetApi="31">
         <activity
-            android:name=".PesquisaActivity"
-            android:parentActivityName=".PrimeiraTelaActivity"
+            android:name=".CadastroClienteActivity"
             android:exported="false" />
+        <activity
+            android:name=".ContatosActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY" />
+
+        <activity
+            android:name=".PesquisaActivity"
+            android:exported="false"
+            android:parentActivityName=".PrimeiraTelaActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
@@ -24,7 +35,7 @@
             android:name=".TesteActivity"
             android:exported="false" />
         <activity
-            android:name=".CadastroActivity"
+            android:name=".CadastrarProdutoActivity"
             android:exported="false"
             android:parentActivityName=".LoginActivity" />
         <activity

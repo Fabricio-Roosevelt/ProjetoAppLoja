@@ -4,12 +4,16 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Novas cores -->
-    <color name="Primeira">#77020C</color>
-    <color name="Secunda">#CC0006</color>
-    <color name="Terceira">#F11A21</color>
+    <color name="primaria">#5A030A</color>
+    <color name="primaria_variacao">#77000D</color>
+    <color name="secundaria">#95000D</color>
+    <color name="secundaria_variacao">#B10106</color>
+    <color name="terceira">#DC070D</color>
+    <color name="Quarta">#F11A21</color>
     <color name="Back">#E36467</color>
-    <color name="Quarta">#8EF2FF</color>
-    <color name="Fundo">#012E33</color>
+    <color name="Fundo">#7AE36467</color>
+    <color name="Fundo_alternativo">#ADFF5303</color>
     <color name="Cinza">#D6D6D6</color>
     <color name="CinzaEscuro">#5A5959</color>
+    <color name="verde_zap">#4CAF50</color>
 </resources>
