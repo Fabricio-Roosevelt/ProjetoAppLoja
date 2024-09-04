@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/otica1" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputEmailCliente"
+        android:id="@+id/textInputLoginEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,6 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editInputLayoutEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Digite seu email"
@@ -39,7 +40,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputTelefoneCliente"
+        android:id="@+id/textInputLoginSenha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -49,9 +50,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEmailCliente">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLoginEmail">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editInputLoginSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Digite sua senha"
@@ -64,15 +66,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="Não tem conta?"
-        app:layout_constraintEnd_toStartOf="@+id/textCadastro"
+        android:text="É administrador e não tem acesso?"
+        app:layout_constraintEnd_toStartOf="@+id/textCadastrarFuncionario"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputTelefoneCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLoginSenha" />
 
     <TextView
-        android:id="@+id/textCadastro"
+        android:id="@+id/textCadastrarFuncionario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -81,20 +83,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textInputTelefoneCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLoginSenha" />
 
     <Button
         android:id="@+id/btnEntrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Entrar"
         android:textColor="#FAF8F8"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="É cliente e quer receber novidades?     "
+        app:layout_constraintEnd_toStartOf="@+id/textCadastrarCliente"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEntrar" />
+
+    <TextView
+        android:id="@+id/textCadastrarCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Cadastre-se Aqui"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView34"
+        app:layout_constraintTop_toBottomOf="@+id/btnEntrar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

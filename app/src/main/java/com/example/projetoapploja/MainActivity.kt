@@ -15,6 +15,7 @@ import com.example.projetoapploja.fragments.EdicaoItemFragment
 import com.example.projetoapploja.fragments.PesquisaFragment
 import com.example.projetoapploja.fragments.Tela1CadastroFragment
 import com.example.projetoapploja.fragments.TelaOpoesFragment
+import com.google.firebase.auth.FirebaseAuth
 import org.checkerframework.checker.units.qual.A
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
 
         inicializarToolbar()
         abrirFragmentPesquisa()

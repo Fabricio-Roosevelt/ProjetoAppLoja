@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroClienteActivity">
+    tools:context=".CadastrarFuncionarioActivity">
 
     <include
-        android:id="@+id/include4"
+        android:id="@+id/include3"
         layout="@layout/activity_toolbar_principal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,186 +18,162 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Cadastro Cliente"
+        android:text="Cadastro Funcionário"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include4" />
+        app:layout_constraintTop_toBottomOf="@+id/include3" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/textView31"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="Nome/Usuario/Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputUsuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Digite um nome ou email para ser o usuario"
+        app:helperText="Ex. jose@email.com"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView31">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextInputUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView32"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Nome Completo"
-        android:textSize="16sp"
+        android:text="Senha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputUsuario" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputNomeCliente"
+        android:id="@+id/textInputSenha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        app:helperText="Ex. José da Silva"
+        android:hint="Digite uma senha"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14">
+        app:layout_constraintTop_toBottomOf="@+id/textView32">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextNomeCliente"
+            android:id="@+id/editTextInputSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite seu nome" />
+            android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/textView33"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="E-mail"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputNomeCliente" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLoginEmail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:helperText="Ex: jose@gmail.com"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextEmailCliente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Digite seu email"
-            android:inputType="text|textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Deseja receber notficações de novidades?"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLoginEmail" />
-
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Escolha a(s) opção(ôes)"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-    <Switch
-        android:id="@+id/switchReceberEmail"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Sim, quero receber via email."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView29" />
-
-    <Switch
-        android:id="@+id/switchReceberMensagem"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:checked="false"
-        android:text="Sim, desejo receber via WhatsApp"
+        android:text="Confirmar Senha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchReceberEmail" />
-
-    <TextView
-        android:id="@+id/textNotificacaoMensagem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Telefone (WhatsApp)"
-        android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchReceberMensagem" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputSenha" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputTelefoneCliente"
+        android:id="@+id/textInputConfirmarSenha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:visibility="invisible"
-        app:endIconMode="none"
-        app:helperText="Numero com DDD: 99 99999 9999"
+        android:hint="Confirme sua senha"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textNotificacaoMensagem">
+        app:layout_constraintTop_toBottomOf="@+id/textView33">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextInputTelefone"
+            android:id="@+id/editTextInputConfirmarSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite seu WhatsApp"
-            android:inputType="phone" />
+            android:inputType="text|textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnCadastrarCliente"
+        android:id="@+id/btnCadastrarFuncionario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Cadastrar"
+        android:text="Cadastrar Funcionario"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputTelefoneCliente" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputConfirmarSenha" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="Editar"
+        android:textColor="@color/white"
+        app:iconTint="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/btnLimpar"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCadastrarFuncionario" />
+
+    <Button
+        android:id="@+id/btnLimpar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:text="Limpar"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnVoltar"
+        app:layout_constraintTop_toBottomOf="@+id/btnCadastrarFuncionario" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
