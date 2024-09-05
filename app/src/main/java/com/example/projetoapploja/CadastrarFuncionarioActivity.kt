@@ -117,7 +117,7 @@ class CadastrarFuncionarioActivity : AppCompatActivity() {
 
     private fun salvarFuncionarioFirestores(usuario: Usuario) {
         firestore
-            .collection("usuarios")
+            .collection("superuser")
             .document(usuario.id)
             .set(usuario)
             .addOnSuccessListener {

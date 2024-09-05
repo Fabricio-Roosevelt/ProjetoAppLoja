@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import com.example.projetoapploja.PesquisaActivity
 import com.example.projetoapploja.R
 import com.example.projetoapploja.databinding.FragmentPesquisaBinding
@@ -47,6 +48,7 @@ class PesquisaFragment : Fragment() {
             editPesquisa.text = ""
         }
         view.findViewById<Button>(R.id.btn_voltar).setOnClickListener {
+
             val intent = Intent(requireContext(), PesquisaActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)

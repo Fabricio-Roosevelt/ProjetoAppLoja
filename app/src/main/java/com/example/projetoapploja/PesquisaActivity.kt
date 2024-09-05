@@ -37,7 +37,7 @@ class PesquisaActivity : AppCompatActivity() {
         }
 
         binding.btnVoltar.setOnClickListener {
-            startActivity(Intent(this, PrimeiraTelaActivity::class.java))
+            finish()
         }
         binding.btnCancelar.setOnClickListener {
             binding.spinnerMarcas.setSelection(0)

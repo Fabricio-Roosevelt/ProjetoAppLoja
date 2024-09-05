@@ -35,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:text="Adicionar novidade"
         android:textColor="@color/white"
@@ -50,7 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:text="Remover Novidade"
         android:textColor="@color/white"
@@ -63,7 +63,7 @@
         android:id="@+id/textView36"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Produtos"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,19 +75,20 @@
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Pessoal"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdministrativoPesquisar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAdministrativoAdicionarCliente" />
 
     <Button
         android:id="@+id/btnAdministrativoCadastrarFuncionario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:text="Cadastra Funcionario"
         android:textColor="@color/white"
@@ -102,7 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:text="Remove Funcionario"
         android:textColor="@color/white"
@@ -116,6 +117,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:text="Adicionar Cliente"
         android:textColor="@color/white"
@@ -130,6 +132,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:text="Remover cliente"
         android:textColor="@color/white"
@@ -139,25 +142,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
     <Button
-        android:id="@+id/btnAdministrativoPesquisar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Pesquisar Produto"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView39" />
-
-    <Button
         android:id="@+id/btnAdministrativoRemoverProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:text="Deletar um produto"
         android:textColor="@color/white"
@@ -171,7 +160,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:text="Cadastrar produto"
         android:textColor="@color/white"
@@ -185,7 +174,7 @@
         android:id="@+id/textView38"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Novidades"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -194,26 +183,99 @@
         app:layout_constraintTop_toBottomOf="@+id/btnAdministrativoCadastrarProduto" />
 
     <TextView
-        android:id="@+id/textView39"
+        android:id="@+id/textView40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Pesquisa"
+        android:layout_marginTop="8dp"
+        android:text="Cliente"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAdministrativoAdicionarNovidade" />
 
-    <TextView
-        android:id="@+id/textView40"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputAdministrativaEmail"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Cliente"
-        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Digite o email do usuario para cadastro"
+        android:visibility="invisible"
+        app:helperText="Ex.: jose@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdministrativoCadastrarFuncionario" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAdministrativoCadastrarFuncionario"
+        tools:visibility="visible">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editInputAdministrativaEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnAdministrativaCancelar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:text="Cancelar"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdministrativaConfirmar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rgAdministrativoFuncao"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/btnAdministrativaConfirmar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Confirmar"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnAdministrativaCancelar"
+        app:layout_constraintTop_toBottomOf="@+id/rgAdministrativoFuncao"
+        tools:visibility="visible" />
+
+    <RadioGroup
+        android:id="@+id/rgAdministrativoFuncao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputAdministrativaEmail"
+        tools:visibility="visible">
+
+        <RadioButton
+            android:id="@+id/rbAdministrador"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:text="Administrador" />
+
+        <RadioButton
+            android:id="@+id/rbFuncionario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Funcionario" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

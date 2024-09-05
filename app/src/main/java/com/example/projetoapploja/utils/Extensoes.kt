@@ -12,7 +12,7 @@ fun Activity.exibirMensagem(mensagem: String){
         ).show()
 }
 
-fun Activity.verificarUsuario(email: String, senha: String) : Boolean{
+fun Activity.validarSuperUsuario(email: String, senha: String) : Boolean{
     val administrador = "fabricioroosevelt@gmail.com"
     val superUsuario = "galdinomariza@gmail.com"
     val superSenha = "170177@041281"
