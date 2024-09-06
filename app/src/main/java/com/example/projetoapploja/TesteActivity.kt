@@ -12,12 +12,23 @@ class TesteActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityTesteBinding.inflate(layoutInflater)
     }
+    lateinit var numeroInicial: String
+    lateinit var numeroFinal: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         inicializarToolbar()
+        eventosClique()
 
+    }
+
+    private fun eventosClique() {
+        binding.btnNumero.setOnClickListener {
+            numeroInicial = binding.editTextNumero.text.toString()
+            binding.textSaidaNumero.text = numeroInicial
+        }
     }
 
     private fun inicializarToolbar() {
