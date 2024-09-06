@@ -63,7 +63,8 @@
             android:id="@+id/editTextNomeCliente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite seu nome" />
+            android:hint="Digite seu nome"
+            android:text="fafa" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -98,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Digite seu email"
-            android:inputType="text|textEmailAddress" />
+            android:inputType="text|textEmailAddress"
+            android:text="fafa@gamil.com" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView

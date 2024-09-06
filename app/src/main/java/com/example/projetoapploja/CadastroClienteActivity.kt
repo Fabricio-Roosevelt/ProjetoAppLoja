@@ -9,8 +9,6 @@ import com.example.projetoapploja.models.Cliente
 import com.example.projetoapploja.utils.exibirMensagem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.dataObjects
-import com.google.firebase.firestore.toObjects
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -81,7 +79,8 @@ class CadastroClienteActivity : AppCompatActivity() {
                     Log.i("texte","OK, email: $emailCliente adicionado com sucesso.")
                     confirmaInclusaoCliente()
                 }else{
-                Log.i("texte","\"Email ${emailCliente} já cadastrado, tente outro.")
+                    Log.i("texte","Email ${emailCliente} já cadastrado, tente outro.")
+                    exibirMensagem("Email ${emailCliente} já cadastrado, tente outro.")
                 }
             }.addOnFailureListener {
                 Log.d("texte", "Error getting documents: ")
@@ -89,77 +88,93 @@ class CadastroClienteActivity : AppCompatActivity() {
     }
 
     fun confirmaInclusaoCliente() {
-        val cliente = Cliente("1",nomeCliente,emailCliente,incluiTelefone())
+        //val cliente = Cliente("1",nomeCliente,emailCliente,incluiTelefone())
+        val cliente = Cliente(atualizaIdCliente(),nomeCliente,emailCliente,incluiTelefone())
         if (verificarEmail() && verificarNome()){
             firestore
                 .collection( "clientes")
-                .document()
+                //.add(atualizaIdCliente())
+                .document(atualizaIdCliente())
                 .set(cliente)
                 .addOnSuccessListener {
                     exibirMensagem("Cliente cadastrado com sucesso!")
+                    Log.i("saida","${cliente.nome} ")
+
                     //startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }.addOnFailureListener {
                     exibirMensagem("Erro ao fazer seu cadastro.")
                 }
         }
-        val referencia = firestore.collection("clientes").document()
+
+        /*val referencia = firestore.collection("clientes").document()
+        referencia.get().addOnCompleteListener { resultado ->
+            if (resultado.isSuccessful){
+                val valor = resultado.result.id
+                val valor1 = resultado.result.data?.get("nome")
+                Log.d("texte", "DocumentSnapshot written with ID: ${valor} == $valor1")
+            }
+        } .addOnFailureListener { e -> Log.i("texte", "Error adding document", e)
+        }*/
+
+
+
+        /*val referencia = firestore.collection("novos_clientes")
+            .add(cliente)
+            .addOnSuccessListener { documentReference ->
+                Log.d("texte", "DocumentSnapshot written with ID: ${documentReference.id}")
+                val valor = documentReference.id
+            }
+            .addOnFailureListener { e ->
+                Log.w("texte", "Error adding document", e)
+            }
+
+        val referencia = firestore.collection("novos_clientes").document()
         val saida = referencia.get().addOnSuccessListener { documentSnapshot ->
             Log.i("texte","${documentSnapshot.getDocumentReference("nome")}")
         }
-        Log.i("texte","$saida")
+        val outro = referencia.update("nome", "Agepe")
+        Log.i("texte","$saida -- $outro")
         //cadastrarIdCliente()
+
+        //nova referwencia
+        val novaReferencia = fire
+        referencia.get()*/
+
     }
 
-    private fun cadastrarIdCliente() {
+    private fun atualizaIdCliente(): String {
+        val referencia = firestore.collection("clientes").document()
 
+        val saida1 = referencia.id
+        val saida = referencia.get().addOnCompleteListener { document ->
+            document.result.id
+            val olhar = document.result.data?.get("nome")
+            Log.i("saida","Aqui --- ${document.result.id}.")
+            Log.i("saida","Alternativa --- ${olhar}.")
+            Log.i("saida","Referencia --- ${saida1}.")
+        }.addOnFailureListener {
+            Log.i("saida","Erro ao ayualizar Id.")
+        }
+        return saida1.toString()
+    }
 
+    private fun cadastrarIdCliente() : String{
 
-        /*val novoUser = firestore.collection("clientes")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val idUser = document.data.get("userId").toString()
-                    val novoId = document.id
-                    Log.i("texte", "$idUser -- $novoId")
-                }
-            }.addOnFailureListener {
-                Log.i("texte","Erro ao ayualizar Id.")
-            }*/
+        // rascunho
+        val referencia = firestore.collection("clientes").document()
+        val saida = referencia.get().addOnCompleteListener { document ->
+            //document.result.id
+            val olhar = document.result.get("nome").toString()
+            Log.i("saida","Aqui --- ${document.result.id}.")
+            Log.i("saida","Aqui --- ${olhar}.")
+        }.addOnFailureListener {
+            Log.i("saida","Erro ao ayualizar Id.")
+        }
+        return saida.toString()
 
-        //firestore.collection("clientes").document()
+                   // val idUser = document.data.get("userId").toString()
+                   // val novoId = document.id
 
-
-
-
-
-
-        /*val novoId: String
-        val novoUser = firestore.collection("clientes")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    //val idUser = document.data.get("userId").toString()
-                    val novoId = document.id
-                    Log.i("texte", "$novoId")
-                }
-                result.query.get()
-                Log.i("texte", "Result -> ${result.query}")
-            }
-            .addOnFailureListener {
-                Log.i("texte","Erro ao ayualizar Id.")
-            }
-        Log.i("texte", "${novoUser}")
-       Log.i("texte", "${novoId.toString()} -- $idUser")
-
-        val usuarioId = firestore.collection("clientes").document()
-            .update("userId","22")
-
-        val colecao = firestore.collection("clientes").document("")
-        colecao
-            .update("userId", "541")
-            .addOnSuccessListener { Log.i("texte", "DocumentSnapshot successfully updated!") }
-            .addOnFailureListener { e -> Log.i("texte", "Error updating document", e) }
-*/
     }
 
     private fun verificarEmail() : Boolean{
