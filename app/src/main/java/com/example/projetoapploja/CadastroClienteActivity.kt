@@ -148,7 +148,7 @@ class CadastroClienteActivity : AppCompatActivity() {
         val saida1 = referencia.id
         val saida = referencia.get().addOnCompleteListener { document ->
             document.result.id
-            val olhar = document.result.data?.get("nome")
+            val olhar = document.result.data?.put("idUser", document.result.id)
             Log.i("saida","Aqui --- ${document.result.id}.")
             Log.i("saida","Alternativa --- ${olhar}.")
             Log.i("saida","Referencia --- ${saida1}.")
