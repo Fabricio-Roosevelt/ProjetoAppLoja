@@ -6,5 +6,5 @@ data class Cliente(
     val email: String,
     val telefone: String = "",
     val rebecerNovidadeEmail: Boolean = false,
-    val reberWhatsApp: Boolean = false
+    val receberWhatsApp: Boolean = false
 )

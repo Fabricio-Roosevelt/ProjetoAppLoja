@@ -38,7 +38,7 @@ class CadastrarProdutoActivity : AppCompatActivity() {
             title = "Cadastre um produto"
             setDisplayHomeAsUpEnabled(true)
         }
-        binding.includeToolbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
+        binding.includeToolbar.tbPrincipal.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId){
                 R.id.itemPesquisar -> {
                     startActivity(Intent(this, PesquisaActivity::class.java))
@@ -108,12 +108,12 @@ class CadastrarProdutoActivity : AppCompatActivity() {
     }
 
     private fun inicializarToolbar() {
-        val toolbar = binding.includeToolbar.tbAlternativa
+        val toolbar = binding.includeToolbar.tbPrincipal
         setSupportActionBar(toolbar)
-        binding.includeToolbar.tbAlternativa.setTitleTextColor(
+        binding.includeToolbar.tbPrincipal.setTitleTextColor(
             ContextCompat.getColor(this,R.color.white)
         )
-        binding.includeToolbar.tbAlternativa.overflowIcon.apply {
+        binding.includeToolbar.tbPrincipal.overflowIcon.apply {
             getColor(R.color.white)
         }
         /*supportActionBar?.apply {

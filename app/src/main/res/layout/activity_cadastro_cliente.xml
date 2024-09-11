@@ -8,8 +8,8 @@
     tools:context=".CadastroClienteActivity">
 
     <include
-        android:id="@+id/include4"
-        layout="@layout/activity_toolbar_principal"
+        android:id="@+id/includeCadastroCliente"
+        layout="@layout/toolbar_alternativo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,12 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="Cadastro Cliente"
         android:textSize="24sp"
@@ -30,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include4" />
+        app:layout_constraintTop_toBottomOf="@+id/includeCadastroCliente" />
 
     <TextView
         android:id="@+id/textView14"

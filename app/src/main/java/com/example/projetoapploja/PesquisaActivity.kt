@@ -107,12 +107,12 @@ class PesquisaActivity : AppCompatActivity() {
     }
 
     private fun inicializarToolbar() {
-        val toolbar = binding.includeToolBar.tbAlternativa
+        val toolbar = binding.includeToolBar.tbPrincipal
         setSupportActionBar(toolbar)
-        binding.includeToolBar.tbAlternativa.setTitleTextColor(
+        binding.includeToolBar.tbPrincipal.setTitleTextColor(
             ContextCompat.getColor(this,R.color.white)
         )
-        binding.includeToolBar.tbAlternativa.overflowIcon.apply {
+        binding.includeToolBar.tbPrincipal.overflowIcon.apply {
             getColor(R.color.white)
         }
     }

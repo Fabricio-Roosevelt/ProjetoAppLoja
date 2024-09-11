@@ -13,16 +13,21 @@
         android:theme="@style/Theme.ProjetoAppLoja"
         tools:targetApi="31">
         <activity
+            android:name=".EditarCadastroClienteActivity"
+            android:exported="false"
+            android:parentActivityName=".PrimeiraTelaActivity"/>
+        <activity
             android:name=".TelaAdministrativaActivity"
-            android:parentActivityName=".PrimeiraTelaActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".PrimeiraTelaActivity" />
         <activity
             android:name=".CadastrarFuncionarioActivity"
             android:exported="false"
             android:parentActivityName=".TelaAdministrativaActivity" />
         <activity
             android:name=".CadastroClienteActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".PrimeiraTelaActivity"/>
         <activity
             android:name=".ContatosActivity"
             android:exported="false" />

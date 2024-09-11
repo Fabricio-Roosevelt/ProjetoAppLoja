@@ -52,12 +52,12 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun inicializarToolbar() {
-        val toolbar = binding.includeActionbar.tbAlternativa
+        val toolbar = binding.includeActionbar.tbPrincipal
         setSupportActionBar(toolbar)
-        binding.includeActionbar.tbAlternativa.setTitleTextColor(
+        binding.includeActionbar.tbPrincipal.setTitleTextColor(
             ContextCompat.getColor(this,R.color.white)
         )
-        binding.includeActionbar.tbAlternativa.overflowIcon.apply {
+        binding.includeActionbar.tbPrincipal.overflowIcon.apply {
             getColor(R.color.white)
         }
     }

@@ -1,17 +1,19 @@
 package com.example.projetoapploja
 
+import android.content.Intent
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.projetoapploja.databinding.ActivityCadastroClienteBinding
 import com.example.projetoapploja.models.Cliente
 import com.example.projetoapploja.utils.exibirMensagem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Locale
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -25,34 +27,123 @@ class CadastroClienteActivity : AppCompatActivity() {
     private val firestore by lazy {
         FirebaseFirestore.getInstance()
     }
-    var dadosCliente = mutableListOf<String>()
     private lateinit var nomeCliente: String
     private lateinit var emailCliente: String
     private lateinit var telefoneCliente: String
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         switchNotificacoes()
+        inicializarToolbar()
         eventosClique()
-
     }
+
 
     private fun eventosClique() {
         binding.btnCadastrarCliente.setOnClickListener {
             nomeCliente = binding.editTextNomeCliente.text.toString()
             emailCliente = binding.editTextEmailCliente.text.toString()
-
             verificarNome()
             verificarEmail()
-            listaWhatsApp()
-            //incluiTelefone()
+            incluirWhatsApp()
             listaQuerReceberNovidades()
             verificarDuplicidadeEmail()
-            //confirmaInclusaoCliente()
+        }
+        binding.includeCadastroCliente.btnEditarCliente.setOnClickListener {
+            startActivity(Intent(this, EditarCadastroClienteActivity::class.java))
+        }
+    }
 
+    private fun switchNotificacoes(){
+        binding.switchReceberMensagem.setOnClickListener {
+            binding.textNotificacaoMensagem.visibility =
+                if (binding.switchReceberMensagem.isChecked) View.VISIBLE
+                else View.INVISIBLE
+            binding.textInputTelefoneCliente.visibility =
+                if (binding.switchReceberMensagem.isChecked) View.VISIBLE
+                else View.INVISIBLE
+        }
+    }
+
+    private fun incluirWhatsApp(): Boolean{
+        if (binding.switchReceberMensagem.isChecked){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    private fun confirmarInclusaoTelefone() : Boolean{
+        if (incluirWhatsApp()) {
+            try {
+                if (verificarCampoTelefone()) {
+                    if (formatarTelefone().isNotEmpty()) {
+                        confirmarInclusao()
+                        return true
+                    }
+                }
+            } catch (e: Exception) {
+                Log.i("saida", "Erro ao adicionar numero.")
+            }
+        }
+        return false
+    }
+
+    private fun confirmarInclusao(){
+        val telefone = formatarTelefone()
+        if (!incluirWhatsApp()){
+            confirmaInclusaoCliente()
+        } else if (incluirWhatsApp() && telefone.isNotEmpty()){
+            confirmaInclusaoCliente()
+        }else {
+            Log.d("saida", "Não pode confirmar inclusão, não pode ser vazio.")
+        }
+    }
+
+    fun verificarCampoTelefone() : Boolean{
+        val numeroTelefone = binding.editInputTelefoneCliente.text.toString()
+        if (numeroTelefone.isNotEmpty()){
+            binding.textInputTelefoneCliente.error = null
+            return true
+        }else{
+            binding.textInputTelefoneCliente.error = "Telefone não pode ser VAZIO."
+            return false
+        }
+    }
+
+    fun formatarTelefone() : String{
+        telefoneCliente = binding.editInputTelefoneCliente.text.toString()
+        if (incluirWhatsApp() && verificarCampoTelefone()) {
+            try {
+                val numeroTefefoneFormatado = PhoneNumberUtils.formatNumberToE164(telefoneCliente, "BR")
+                return numeroTefefoneFormatado
+            } catch (e: Exception) {
+                exibirMensagem("Numero invalido. \nDigite com o DDD (Ex: 84) e sem espaço entre os números.")
+            }
+        }
+        return ""
+    }
+
+    private fun verificarNome() : Boolean{
+        nomeCliente = binding.editTextNomeCliente.text.toString()
+        if (nomeCliente.isNotEmpty()){
+            binding.textInputNomeCliente.error = null
+            return true
+        }else{
+            binding.textInputNomeCliente.error = "Nome não pode ser vazio."
+            return false
+        }
+    }
+
+    private fun verificarEmail() : Boolean{
+        emailCliente = binding.editTextEmailCliente.text.toString()
+        if (emailCliente.isNotEmpty()){
+            binding.editTextEmailCliente.error = null
+            return true
+        }else{
+            binding.editTextEmailCliente.error = "Nome não pode ser vazio."
+            return false
         }
     }
 
@@ -75,28 +166,33 @@ class CadastroClienteActivity : AppCompatActivity() {
                     }
                 }
                 if (emailsIguais == 0){
-                    Log.i("texte","OK, email: $emailCliente adicionado com sucesso.")
-                    confirmaInclusaoCliente()
+                    Log.i("saida","OK, o email: $emailCliente pode ser adicionado.")
+                    if (incluirWhatsApp()){
+                        confirmarInclusaoTelefone()
+                    }else{
+                        confirmaInclusaoCliente()
+                    }
                 }else{
                     Log.i("saida","Email ${emailCliente} já cadastrado, tente outro.")
                     exibirMensagem("Email ${emailCliente} já cadastrado, tente outro.")
                 }
             }.addOnFailureListener {
-                Log.d("texte", "Error getting documents: ")
+                Log.d("saida", "Error getting documents: ")
             }
     }
 
-    fun confirmaInclusaoCliente() {
+    private fun confirmaInclusaoCliente() {
         val referencia = firestore.collection("clientes").document()
         val idUsuario = referencia.id
         val recerNovidadeEmail = listaQuerReceberNovidades()
-        val reberWhatsApp = listaWhatsApp()
+        val reberWhatsApp = incluirWhatsApp()
+        val numeroTelefoneFormatado = formatarTelefone()
 
         val cliente = Cliente(
             idUsuario,
             nomeCliente,
             emailCliente,
-            incluiTelefone(telefoneCliente),
+            numeroTelefoneFormatado,
             recerNovidadeEmail,
             reberWhatsApp
         )
@@ -107,7 +203,7 @@ class CadastroClienteActivity : AppCompatActivity() {
                 .set(cliente)
                 .addOnSuccessListener {
                     exibirMensagem("Cliente cadastrado com sucesso!")
-                    Log.i("saida","${cliente.nome} ")
+                    limparCampos()
                     //startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }.addOnFailureListener {
                     exibirMensagem("Erro ao fazer seu cadastro.")
@@ -115,97 +211,17 @@ class CadastroClienteActivity : AppCompatActivity() {
         }
     }
 
-    private fun rascunho() : String{
-
-        // rascunho
-        val referencia = firestore.collection("clientes").document()
-        val saida = referencia.get().addOnCompleteListener { document ->
-            document.result.id
-            val olhar = document.result.data?.get("email")
-            Log.i("saida","Aqui --- ${document.result.id}.")
-            Log.i("saida","Alternativa --- ${olhar}.")
-            Log.i("saida","Referencia --- .")
-        }.addOnFailureListener {
-            Log.i("saida","Erro ao ayualizar Id.")
-        }
-        return saida.toString()
-
-                   // val idUser = document.data.get("userId").toString()
-                   // val novoId = document.id
-
+    private fun limparCampos() {
+        binding.switchReceberEmail.isChecked = false
+        binding.switchReceberMensagem.isChecked = false
+        binding.textNotificacaoMensagem.visibility = View.INVISIBLE
+        binding.editInputTelefoneCliente.text = null
+        binding.textInputTelefoneCliente.visibility = View.INVISIBLE
     }
 
-    private fun verificarEmail() : Boolean{
-        emailCliente = binding.editTextEmailCliente.text.toString()
-        if (emailCliente.isNotEmpty()){
-            binding.editTextEmailCliente.error = null
-            return true
-        }else{
-            binding.editTextEmailCliente.error = "Nome não pode ser vazio."
-            return false
-        }
+    private fun inicializarToolbar() {
+        setSupportActionBar(binding.includeCadastroCliente.tbAlternativa)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
-
-    private fun verificarNome() : Boolean{
-        nomeCliente = binding.editTextNomeCliente.text.toString()
-        if (nomeCliente.isNotEmpty()){
-            binding.textInputNomeCliente.error = null
-            return true
-        }else{
-            binding.textInputNomeCliente.error = "Nome não pode ser vazio."
-            return false
-        }
-    }
-
-    fun incluiTelefone(numeroTelefone:String) : String {
-        //telefoneCliente = binding.editInputTelefoneCliente.text.toString()
-        if (numeroTelefone.isNotEmpty()){
-            try {
-                val formattedNumber = PhoneNumberUtils.formatNumberToE164(numeroTelefone, "BR")
-                Log.i("saida","numero: $formattedNumber")
-                return  formattedNumber
-            }catch (e: Exception){
-                Toast.makeText(this, "Numero invalido. \nDigite com o DDD (Ex: 84) e sem espaço entre os números.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        return "55"
-
-
-        //rascunho
-        /*if (telefoneCliente.isEmpty()){
-           Toast.makeText(this, "Digite seu telefone com ddd.", Toast.LENGTH_LONG).show()
-       }
-       try {
-           val formattedNumber = PhoneNumberUtils.formatNumberToE164(telefoneCliente, "BR")
-           Log.i("saida","numero: $formattedNumber")
-           return  formattedNumber
-       }catch (e: Exception){
-           Toast.makeText(this, "Numero invalido. \nDigite com o DDD (Ex: 84) e sem espaço entre os números.", Toast.LENGTH_SHORT).show()
-       }*/
-
-    }
-
-    private fun listaWhatsApp() : Boolean{
-        if (binding.switchReceberMensagem.isChecked){
-            telefoneCliente = binding.editInputTelefoneCliente.text.toString()
-            incluiTelefone(telefoneCliente)
-            return  true
-        }
-        return false
-    }
-
-    private fun switchNotificacoes() {
-        binding.switchReceberMensagem.setOnClickListener {
-            binding.textNotificacaoMensagem.visibility =
-                if (binding.switchReceberMensagem.isChecked) View.VISIBLE
-            else View.INVISIBLE
-            binding.textInputTelefoneCliente.visibility =
-                if (binding.switchReceberMensagem.isChecked) View.VISIBLE
-                else View.INVISIBLE
-        }
-    }
-
-
-
 
 }
