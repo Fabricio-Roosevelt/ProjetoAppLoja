@@ -4,16 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.projetoapploja.databinding.ActivityCadastroClienteBinding
 import com.example.projetoapploja.models.Cliente
 import com.example.projetoapploja.utils.exibirMensagem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class CadastroClienteActivity : AppCompatActivity() {
@@ -140,9 +139,17 @@ class CadastroClienteActivity : AppCompatActivity() {
         emailCliente = binding.editTextEmailCliente.text.toString()
         if (emailCliente.isNotEmpty()){
             binding.editTextEmailCliente.error = null
-            return true
+            val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+            val inputStr: CharSequence = emailCliente
+            val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+            val matcher: Matcher = pattern.matcher(inputStr)
+            return if (matcher.matches()) {
+                true
+            } else {
+                false
+            }
         }else{
-            binding.editTextEmailCliente.error = "Nome não pode ser vazio."
+            binding.editTextEmailCliente.error = "Email não pode ser vazio."
             return false
         }
     }
@@ -208,6 +215,10 @@ class CadastroClienteActivity : AppCompatActivity() {
                 }.addOnFailureListener {
                     exibirMensagem("Erro ao fazer seu cadastro.")
                 }
+        } else{
+            exibirMensagem("Email e/ou formato invalido. " +
+                    "\nFavor inserir um email válido." +
+                    "\nEx.: maria@email.com")
         }
     }
 

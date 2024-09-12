@@ -35,9 +35,13 @@ class TelaAdministrativaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         eventosClique()
+        inicializarToolbar()
+    }
 
+    private fun inicializarToolbar() {
+        setSupportActionBar(binding.includeTelaAdministrativa.tbPrincipal)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun eventosClique() {
@@ -59,6 +63,9 @@ class TelaAdministrativaActivity : AppCompatActivity() {
         }
         binding.btnAdministrativoAdicionarCliente.setOnClickListener {
             startActivity(Intent(this, CadastroClienteActivity::class.java))
+        }
+        binding.btnAdministrativoRemoverCliente.setOnClickListener {
+            startActivity(Intent(this, EditarCadastroClienteActivity::class.java))
         }
     }
 

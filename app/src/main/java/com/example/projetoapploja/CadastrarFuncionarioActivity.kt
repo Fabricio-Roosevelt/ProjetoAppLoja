@@ -31,11 +31,19 @@ class CadastrarFuncionarioActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        eventosClique()
+        inicializarToolbar()
+    }
 
+    private fun inicializarToolbar() {
+        setSupportActionBar(binding.includeCadastrarFuncionario.tbPrincipal)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun eventosClique() {
         binding.btnCadastrarFuncionario.setOnClickListener {
             confirmarNome()
             confirmarSenha()

@@ -4,10 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-
 import com.example.projetoapploja.databinding.ActivityEditarCadastroClienteBinding
+import com.example.projetoapploja.utils.exibirMensagem
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class EditarCadastroClienteActivity : AppCompatActivity() {
@@ -46,16 +49,25 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
         emailCliente = binding.editInputEditarEmailCliente.text.toString()
         if (emailCliente.isNotEmpty()){
             binding.editInputEditarEmailCliente.error = null
-            return true
+            val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
+            val inputStr: CharSequence = emailCliente
+            val pattern: Pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+            val matcher: Matcher = pattern.matcher(inputStr)
+            return if (matcher.matches()) {
+                true
+            } else {
+                false
+            }
         }else{
-            binding.editInputEditarEmailCliente.error = "Nome não pode ser vazio."
+            binding.editInputEditarEmailCliente.error = "Email não pode ser vazio."
             return false
         }
     }
 
     private fun verificarCadastro(opcao: String){
+        var contagem = 0
+        emailCliente = binding.editInputEditarEmailCliente.text.toString()
         if (verificarEmail()) {
-            emailCliente = binding.editInputEditarEmailCliente.text.toString()
             firestore.collection("clientes")
                 .get()
                 .addOnSuccessListener { result ->
@@ -63,35 +75,71 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
                         val emailComparacao = it.data.get("email").toString()
                         if (emailComparacao == emailCliente) {
                             val idCliente = it.data.get("userId").toString()
-                            // Inserir popup alerta aqui
-                            Log.i("saida", "Email encontrado, confirma edição?")
-                            Log.i("saida", "${it.data.get("userId")}")
-                            if (opcao == "editar"){
-                                editarEmail(idCliente)
-                            }else if (opcao == "deletar"){
-                                excluirEmail(idCliente)
-                            }
+                            //Log.i("saida", "Email encontrado, confirma edição?")
+                           // Log.i("saida", "Verifica cadastro: ${it.data.get("userId")} - $opcao")
+                            alertaDialogo(idCliente,opcao)
                             return@addOnSuccessListener
                         } else {
-                            Log.i("saida", "Email não cadastrado na base de dados.")
+                            contagem += 1
                         }
+                    }
+                    if (contagem != 0){
+                        exibirMensagem("Não existe cliente cadastrado com este email.")
                     }
                 }.addOnFailureListener {
                     Log.d("saida", "Error desconhecido.")
                 }
+        }else{
+            exibirMensagem("Email e/ou formato invalido. " +
+                    "\nFavor inserir um email válido." +
+                    "\nEx.: maria@email.com")
         }
     }
 
-    private fun excluirEmail(idCliente: String) {
-        val referencia = firestore.collection("clientes").document(idCliente).delete()
-        Log.i("saida","Email excluido com sucesso.")
-        startActivity(Intent(this, PrimeiraTelaActivity::class.java))
+    private fun alertaDialogo(idCliente: String, opcao: String) {
+        val idUsuario = idCliente
+        val novaOpcao = opcao
+        val alertBuilder = AlertDialog.Builder(this)
+        alertBuilder.setTitle(
+            if (opcao == "deletar")
+                {"Confirmar exclusão do usuário"
+            }else {"Confirma edição do usuario."
+            })
+            .setMessage(
+                if (opcao == "deletar")
+                    {"Todos dados referentes ao usuario serão removidos."
+                }else {"Você poderá editar seus dados novamente."
+                })
+            .setNegativeButton("Cancelar"){dialog, posicao ->
+                exibirMensagem("Você cancelou a ação.")
+            }.setPositiveButton(
+                if (opcao == "deletar") "REMOVER" else "Editar"){dialog, posicao ->
+                exibirMensagem(
+                    if (opcao == "deletar")
+                    {"Você removeu o usuario."
+                    }else {"Você será redirecionado para edição cadastro."
+                    }
+                )
+                editarExcluirEmail(idUsuario, novaOpcao)
+            }.setIcon(R.drawable.ic_alert_24)
+                .setCancelable(false)
+                .create()
+                .show()
     }
 
-    private fun editarEmail(idCliente: String) {
-        val referencia = firestore.collection("clientes").document(idCliente).delete()
-        Log.i("saida","Email excluido com sucesso.")
-        startActivity(Intent(this, CadastroClienteActivity::class.java))
+    private fun editarExcluirEmail(idCliente: String, opcao: String) {
+        val referencia = firestore.collection("clientes").document(idCliente)
+        if (opcao == "deletar") {
+            referencia.delete()
+            Log.i("saida", "Email excluido com sucesso.")
+            startActivity(Intent(this, PrimeiraTelaActivity::class.java))
+        }else if (opcao == "editar"){
+            referencia.delete()
+            Log.i("saida", "Redirecionando para edição.")
+            startActivity(Intent(this, CadastroClienteActivity::class.java))
+        }else{
+            Log.i("saida","resposta nula - algo deu errado!!")
+        }
     }
 
     private fun inicializarToolbar() {

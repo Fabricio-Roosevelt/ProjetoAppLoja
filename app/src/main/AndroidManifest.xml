@@ -15,7 +15,7 @@
         <activity
             android:name=".EditarCadastroClienteActivity"
             android:exported="false"
-            android:parentActivityName=".PrimeiraTelaActivity"/>
+            android:parentActivityName=".CadastroClienteActivity"/>
         <activity
             android:name=".TelaAdministrativaActivity"
             android:exported="false"

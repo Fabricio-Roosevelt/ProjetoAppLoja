@@ -8,7 +8,7 @@
     tools:context=".CadastrarFuncionarioActivity">
 
     <include
-        android:id="@+id/include3"
+        android:id="@+id/includeCadastrarFuncionario"
         layout="@layout/activity_toolbar_principal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,21 +21,21 @@
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Atualizar Funcionário"
+        android:layout_marginTop="8dp"
+        android:text="Atualizar Novo Funcionário"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include3" />
+        app:layout_constraintTop_toBottomOf="@+id/includeCadastrarFuncionario" />
 
     <TextView
         android:id="@+id/textView31"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Digite seu email cadastrado"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,20 +69,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:text="Senha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputUsuarioNome" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputSenha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:hint="Digite uma senha"
         app:endIconMode="password_toggle"
@@ -116,7 +115,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:hint="Confirme sua senha"
         app:endIconMode="password_toggle"
@@ -175,5 +173,36 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnVoltar"
         app:layout_constraintTop_toBottomOf="@+id/btnCadastrarFuncionario" />
+
+    <TextView
+        android:id="@+id/textView42"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Nome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputUsuario" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputUsuarioNome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView42">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextFuncionarioNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Insira seu nome" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
