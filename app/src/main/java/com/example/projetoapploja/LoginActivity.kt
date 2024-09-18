@@ -10,7 +10,6 @@ import com.example.projetoapploja.databinding.ActivityLoginBinding
 import com.example.projetoapploja.databinding.ActivityMainBinding
 import com.example.projetoapploja.fragments.AdicaoItemFragment
 import com.example.projetoapploja.fragments.EdicaoItemFragment
-import com.example.projetoapploja.fragments.Tela1CadastroFragment
 import com.example.projetoapploja.models.Usuario
 import com.example.projetoapploja.utils.exibirMensagem
 import com.example.projetoapploja.utils.validarSuperUsuario

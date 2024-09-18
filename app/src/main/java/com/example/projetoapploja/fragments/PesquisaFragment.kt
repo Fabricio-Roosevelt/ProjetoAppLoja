@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.FragmentManager
 import com.example.projetoapploja.PesquisaActivity
 import com.example.projetoapploja.R
 import com.example.projetoapploja.databinding.FragmentPesquisaBinding
@@ -36,16 +34,18 @@ class PesquisaFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_pesquisa, container, false)
 
-        btnPesquisar = view.findViewById(R.id.btn_pesquisa)
+        btnPesquisar = view.findViewById(R.id.btn_avancar_tela2)
         btnVoltar = view.findViewById(R.id.btn_voltar)
         btnLimparPesquisa = view.findViewById(R.id.btnCancelar)
         textPesquisa = view.findViewById(R.id.texto_nome_pesquisado)
         editPesquisa = view.findViewById(R.id.edit_texto_pesquisado)
 
 
-        view.findViewById<Button>(R.id.btn_pesquisa).setOnClickListener {
+        view.findViewById<Button>(R.id.btn_avancar_tela2).setOnClickListener {
             textPesquisa.text = editPesquisa.text.toString()
             editPesquisa.text = ""
+            val result = "result"
+
         }
         view.findViewById<Button>(R.id.btn_voltar).setOnClickListener {
 

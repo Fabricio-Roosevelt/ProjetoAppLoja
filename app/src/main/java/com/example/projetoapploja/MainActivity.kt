@@ -1,28 +1,28 @@
 package com.example.projetoapploja
 
 import android.os.Bundle
-import android.view.Menu
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.projetoapploja.databinding.ActivityLoginBinding
+import androidx.fragment.app.Fragment
 import com.example.projetoapploja.databinding.ActivityMainBinding
 import com.example.projetoapploja.fragments.AdicaoItemFragment
 import com.example.projetoapploja.fragments.EdicaoItemFragment
 import com.example.projetoapploja.fragments.PesquisaFragment
-import com.example.projetoapploja.fragments.Tela1CadastroFragment
-import com.example.projetoapploja.fragments.TelaOpoesFragment
-import com.google.firebase.auth.FirebaseAuth
-import org.checkerframework.checker.units.qual.A
+import com.example.projetoapploja.fragments.TesteFragment
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), MinhaInterface {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
+    ////////////////////////
+    lateinit var textoVindoDoFragment: TextView
+    lateinit var fragmento: Fragment
+    //////////////////////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +30,33 @@ class MainActivity : AppCompatActivity() {
 
 
         inicializarToolbar()
-        abrirFragmentPesquisa()
+        //abrirFragmentPesquisa()
         //abrirFragmentContatos()
+
+        /////////////////////////
+        textoVindoDoFragment = findViewById(R.id.textRetornoFragment)
+        abrirFragmentTeste(EdicaoItemFragment())
+        /////////////////////////
+
     }
+
+
+
+    private fun abrirFragmentTeste(fragment: Fragment) {
+        val fragmentTransation = supportFragmentManager.beginTransaction()
+        fragmentTransation.replace(R.id.fragment_conteudo, fragment)
+        fragmentTransation.commit()
+    }
+
 
     private fun abrirFragmentContatos() {
         // inicializar Fragment
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_conteudo, AdicaoItemFragment())
+            .replace(R.id.fragment_conteudo, TesteFragment())
             .commit()
     }
+
 
     private fun abrirFragmentPesquisa() {
         // inicializar Fragment
@@ -107,11 +123,29 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun abrirTelaCadastro() {
+    private fun abrirTelaCadastro(){
         // inicializar Fragment
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_conteudo, Tela1CadastroFragment())
+            .replace(R.id.fragment_conteudo, EdicaoItemFragment())
             .commit()
     }
+
+    ///testes
+    override fun transferirMensagem(msg: String) {
+        textoVindoDoFragment.text = msg
+        Log.i("saida", "$msg")
+        if (msg.isNotEmpty()){
+            if (msg == "Adicao"){
+                abrirTelaAdicaoItem()
+            } else if (msg == "Pesquisa"){
+                abrirFragmentPesquisa()
+            } else{
+                abrirTelaCadastro()
+            }
+        } else {
+            abrirFragmentContatos()
+        }
+    }
+
 }
