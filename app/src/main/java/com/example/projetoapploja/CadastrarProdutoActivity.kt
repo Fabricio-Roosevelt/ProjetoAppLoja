@@ -11,7 +11,12 @@ import androidx.core.content.ContextCompat
 import com.example.projetoapploja.databinding.ActivityCadastrarProdutoBinding
 import com.example.projetoapploja.fragments.AdicaoItemFragment
 import com.example.projetoapploja.fragments.CadastrarProdutoTela1Fragment
+import com.example.projetoapploja.fragments.CadastroProdutoTela2Fragment
 import com.example.projetoapploja.fragments.EdicaoItemFragment
+import com.example.projetoapploja.models.Cliente
+import com.example.projetoapploja.models.Produto
+import com.example.projetoapploja.utils.exibirMensagem
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
@@ -19,23 +24,17 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
     private val binding by lazy {
         ActivityCadastrarProdutoBinding.inflate(layoutInflater)
     }
-    var listaCadastro = mutableMapOf(
-        "marca" to "",
-        "tipo" to "",
-        "sexo" to "",
-        "novidade" to "",
-        "modelo" to ""
-    )
+
+    private val firestore by lazy {
+        FirebaseFirestore.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         //supportActionBar?.hide()   // retirar actionbar da tela
-
         inicializarToolbar()
         iniciarFragments()
-        //spinnerMarca()
-
     }
 
     private fun iniciarFragments() {
@@ -60,10 +59,33 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
     }
 
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
-        //binding.textView43.text = mensagem.toString()
-        Log.i("saida", "Estou na activity: $mensagem")
-    }
+        val referencia = firestore.collection("produtos").document()
+        val idProduto = referencia.id
+        val marcaProduto = "${mensagem.get("marca")}"
+        val tipoProdtuo = "${mensagem.get("tipo")}"
+        val generoProduto = "${mensagem.get("sexo")}"
+        val novidadeProduto = "${mensagem.get("novidade")}"
+        val modeloProduto = "${mensagem.get("modelo")}"
 
+        val produto = Produto(
+            idProduto,
+            marcaProduto,
+            tipoProdtuo,
+            generoProduto,
+            novidadeProduto,
+            modeloProduto,
+        )
+        firestore
+            .collection( "produtos")
+            .document(idProduto)
+            .set(produto)
+            .addOnSuccessListener {
+                exibirMensagem("Produto cadastrado com sucesso!")
+                startActivity(Intent(applicationContext, CadastrarProdutoActivity::class.java))
+            }.addOnFailureListener {
+                exibirMensagem("Erro ao fazer seu cadastro.")
+            }
+    }
 
     /*
    override fun onCreateOptionsMenu(menu: Menu?): Boolean {

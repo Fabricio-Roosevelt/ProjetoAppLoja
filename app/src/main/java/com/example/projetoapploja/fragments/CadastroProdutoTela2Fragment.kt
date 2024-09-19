@@ -1,13 +1,12 @@
 package com.example.projetoapploja.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.example.projetoapploja.ProdutosNovosInsterface
 import com.example.projetoapploja.R
 import com.google.android.material.textfield.TextInputEditText
@@ -72,8 +71,8 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
         bundle.putString("marca", cadastroMarca)
         bundle.putString("tipo", cadastroTipo)
         bundle.putString("sexo", cadastroGenero)
-        bundle.putString("sexo", cadastroNovidade)
-        bundle.putString("sexo", cadastroModelo)
+        bundle.putString("novidade", cadastroNovidade)
+        bundle.putString("modelo", cadastroModelo)
 
         val minhaInterface: ProdutosNovosInsterface = activity as ProdutosNovosInsterface
         minhaInterface.transferirDadosNovoProduto(listaCadastro)
@@ -102,4 +101,5 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
         val mensagem = listaCadastro
     }
+
 }
