@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.snackbar.Snackbar
 
 class MensagemAdapter(
-
     private val clique: (String) -> Unit   // dados para enviar no clique
 ) : Adapter<MensagemAdapter.MensagemViewHolder>() {
 
@@ -55,17 +54,18 @@ class MensagemAdapter(
         val itemView: View
     ) : ViewHolder(itemView){
         // elementos da tela
-        val textNome: TextView = itemView.findViewById(R.id.text_nome)
-        val textDescricao: TextView = itemView.findViewById(R.id.text_descricao)
-        val textData: TextView = itemView.findViewById(R.id.text_data)
-        val imagemPerfil: ImageView = itemView.findViewById(R.id.image_perfil)
+        //val textNome: TextView = itemView.findViewById(R.id.text_nome_teste)
+        //val textDescricao: TextView = itemView.findViewById(R.id.text_descricao_teste)
+        //val textData: TextView = itemView.findViewById(R.id.text_data_teste)
+        //val imagemPerfil: ImageView = itemView.findViewById(R.id.image_perfil_teste)
+        val imagemPerfil: ImageView = itemView.findViewById(R.id.imageCardProduto)
         //val retorno: ItemView = itemView.findViewById(R.id.ver_perfil)
 
         // funcao para executar e exibir eventos na tela
         fun bind(mensagem: Mensagem){
-            textNome.text = mensagem.nome
-            textDescricao.text = mensagem.descricao
-            textData.text = mensagem.data
+            //textNome.text = mensagem.nome
+            //textDescricao.text = mensagem.descricao
+            //textData.text = mensagem.data
 
             // Aplicando eventos de clique
             //val context = imagemPerfil.context
@@ -86,17 +86,15 @@ class MensagemAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MensagemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val itemView = layoutInflater.inflate(
-            R.layout.item_lista, parent, false
+            R.layout.item_card_view, parent, false
         )
         return MensagemViewHolder(itemView)
     }
 
     // ao vincular os dados para a visualização ( view holder)
     override fun onBindViewHolder(holder: MensagemViewHolder, position: Int) {
-
         val mensagem = listaMensagens[position]
         holder.bind(mensagem)
-
     }
 
     // Recupera a quantidade de itens

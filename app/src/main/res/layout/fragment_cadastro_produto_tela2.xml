@@ -6,82 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CadastroProdutoTela2Fragment">
 
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:text="Quer adicionar esse produto em novidade?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btn_tela_produto_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Retornar a tela anterior"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdicionarFotos" />
-
-    <RadioGroup
-        android:id="@+id/rgNovidade"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView44">
-
-        <RadioButton
-            android:id="@+id/rbNovidadeSim"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sim" />
-
-        <RadioButton
-            android:id="@+id/rbNovidadeNao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Não" />
-    </RadioGroup>
-
-    <ImageButton
-        android:id="@+id/btnAdicionarFotos"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/image_rounded_corner_3"
-        android:elevation="10dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_camera_24"
-        app:layout_constraintDimensionRatio="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView45"
-        app:layout_constraintTop_toBottomOf="@+id/textInputCadastroModelo" />
-
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Adicionar fotos"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAdicionarFotos"
-        app:layout_constraintEnd_toStartOf="@+id/btnAdicionarFotos"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAdicionarFotos" />
+        app:layout_constraintTop_toBottomOf="@+id/switchNovidade" />
 
     <TextView
         android:id="@+id/textView46"
@@ -94,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rgNovidade" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputCadastroModelo"
@@ -103,6 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:helperText="Ex. Aviador"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +47,7 @@
             android:id="@+id/editTextCadastroModelo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint" />
+            android:hint="Digite um modelo especifico (se houver)" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -127,17 +62,36 @@
         app:layout_constraintTop_toTopOf="@+id/btn_tela_produto_2" />
 
     <Button
-        android:id="@+id/btnCadastroConfirmar"
+        android:id="@+id/btnAvancarCadastroFotos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Confirmar Cadastro do Produto"
+        android:text="Adicionar as Fotos do Produto."
         android:textColor="@color/white"
+        app:icon="@drawable/ic_camera_24"
+        app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_tela_produto_2" />
+
+    <Switch
+        android:id="@+id/switchNovidade"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:checked="false"
+        android:text="Esse item é Novidade?"
+        android:textOff="nao"
+        android:textOn="sim"
+        android:trackTint="@color/secundaria_variacao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputCadastroModelo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

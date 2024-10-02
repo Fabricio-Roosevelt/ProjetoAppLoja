@@ -1,19 +1,13 @@
 package com.example.projetoapploja
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.example.projetoapploja.databinding.ActivityCadastrarProdutoBinding
-import com.example.projetoapploja.fragments.AdicaoItemFragment
+import com.example.projetoapploja.fragments.AdicionarFotosFragment
 import com.example.projetoapploja.fragments.CadastrarProdutoTela1Fragment
-import com.example.projetoapploja.fragments.CadastroProdutoTela2Fragment
-import com.example.projetoapploja.fragments.EdicaoItemFragment
-import com.example.projetoapploja.models.Cliente
 import com.example.projetoapploja.models.Produto
 import com.example.projetoapploja.utils.exibirMensagem
 import com.google.firebase.firestore.FirebaseFirestore
@@ -80,8 +74,17 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
             .document(idProduto)
             .set(produto)
             .addOnSuccessListener {
-                exibirMensagem("Produto cadastrado com sucesso!")
-                startActivity(Intent(applicationContext, CadastrarProdutoActivity::class.java))
+                exibirMensagem("Favor inserir as fotos do produto.")
+                val adicionarFotosFragment = AdicionarFotosFragment()
+                val bundle = bundleOf(
+                    "idPastaDeFotos" to idProduto
+                )
+                Log.i("saida", "Activity -- $bundle")
+                adicionarFotosFragment.arguments = bundle
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fl_cadastro, adicionarFotosFragment)
+                    .commit()
+                //startActivity(Intent(applicationContext, CadastrarProdutoActivity::class.java))
             }.addOnFailureListener {
                 exibirMensagem("Erro ao fazer seu cadastro.")
             }

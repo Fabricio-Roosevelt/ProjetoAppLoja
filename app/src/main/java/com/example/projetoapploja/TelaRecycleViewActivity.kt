@@ -55,7 +55,7 @@ class TelaRecycleViewActivity : AppCompatActivity() {
         binding.rvLista.adapter = mensagemAdapter
 
         //configurando layout da tela
-        binding.rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        binding.rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         // DIVISOR DE ITENS
         binding.rvLista.addItemDecoration(
             DividerItemDecoration(

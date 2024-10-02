@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioGroup
+import android.widget.Switch
 import androidx.fragment.app.Fragment
 import com.example.projetoapploja.ProdutosNovosInsterface
 import com.example.projetoapploja.R
@@ -40,16 +41,16 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
 
         val botaoVoltar : Button = view.findViewById(R.id.btn_tela_produto_2)
         val botaoCancelar : Button = view.findViewById(R.id.btnCadastroCancelar)
-        val botaoConfirmar : Button = view.findViewById(R.id.btnCadastroConfirmar)
+        val botaoConfirmar : Button = view.findViewById(R.id.btnAvancarCadastroFotos)
 
-        // botes de clique
+        // botoes de clique
         botaoVoltar.setOnClickListener {
             val fragment = CadastrarProdutoTela1Fragment()
             val transition = fragmentManager?.beginTransaction()
             transition?.replace(R.id.fl_cadastro, fragment)?.commit()
         }
         botaoCancelar.setOnClickListener {
-            view.findViewById<RadioGroup>(R.id.rgNovidade).clearCheck()
+            view.findViewById<RadioGroup>(R.id.switchNovidade).clearCheck()
             view.findViewById<TextInputEditText>(R.id.editTextCadastroModelo).text = null
         }
         botaoConfirmar.setOnClickListener {
@@ -91,15 +92,14 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
     }
 
     private fun verificarNovidade() : Boolean{
-        val idNovidade = view?.findViewById<RadioGroup>(R.id.rgNovidade)?.checkedRadioButtonId
-        when( idNovidade) {
-            R.id.rbNovidadeSim -> return true
-            else -> return false
-        }
+        val idNovidade = view?.findViewById<Switch>(R.id.switchNovidade)?.isChecked
+        if (idNovidade!!) true else false
+        return idNovidade
     }
 
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
         val mensagem = listaCadastro
     }
+
 
 }

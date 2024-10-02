@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.projetoapploja"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 29
         versionCode = 1
         versionName = "1.0"
 
@@ -49,6 +49,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
+
+    // picasso
+    implementation("com.squareup.picasso:picasso:2.8")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
