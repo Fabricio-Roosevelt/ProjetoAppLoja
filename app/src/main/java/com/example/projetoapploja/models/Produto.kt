@@ -6,5 +6,7 @@ data class Produto(
     val tipo: String,
     val genero: String,
     val novidade: String,
-    val modelo: String = ""
+    val modelo: String = "",
+    //val imagemUrl: String = ""
+    var imagemUrl: MutableList<String>
 )

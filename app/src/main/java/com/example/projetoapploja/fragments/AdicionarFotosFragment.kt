@@ -1,6 +1,6 @@
 package com.example.projetoapploja.fragments
 
-import android.graphics.Bitmap
+import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -14,147 +14,220 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.cardview.widget.CardView
-import androidx.core.graphics.drawable.toIcon
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projetoapploja.ImagemAdapter
-import com.example.projetoapploja.Imagens
-import com.example.projetoapploja.Mensagem
-import com.example.projetoapploja.MensagemAdapter
 import com.example.projetoapploja.R
-import com.example.projetoapploja.RecycleViewImagens
 import com.google.firebase.storage.FirebaseStorage
-import com.squareup.picasso.Picasso
-import java.net.URL
 import java.time.LocalDateTime
 import java.util.Calendar
+import java.util.UUID
 
 class AdicionarFotosFragment() : Fragment() {
 
     private val armazenamento by lazy {
         FirebaseStorage.getInstance()
     }
-
-    private lateinit var imagemSelecionada: ImageView
-    private lateinit var capturarCamera: ImageButton
     private lateinit var capturarGaleria: ImageButton
     private lateinit var botaoAPagar: Button
     private lateinit var botaoConfirmarFoto: Button
     private lateinit var botaoUpload: Button
-    private lateinit var imagemProduto1: ImageView
-    private lateinit var imagemProduto2: ImageView
-
-    //// introduzir adapter
-    private var gridLayoutManager: CardView? = null
-    private lateinit var recycleViewImagens: ImagemAdapter
-    private lateinit var recycleImagem: ImagemAdapter
-    var listaImagens: MutableList<Imagens> = mutableListOf()
-
-    private lateinit var adapter: ImagemAdapter
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var novoArrayList: ArrayList<Imagens>
-    private lateinit var imageId: Array<Int>
-    private lateinit var mensagemAdapter: MensagemAdapter
-    //////////////////////
 
     private var uriImagemSelecionada: Uri? = null
+    private lateinit var uriModificada: Uri
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var imagemAdapter: ImagemAdapter
+    private val imagemUris = mutableListOf<Uri>()
     private var idPasta: String? = null
-    private var nomeFoto: String? = null
     private val abrirGaleria = registerForActivityResult(
         ActivityResultContracts.GetContent()
-    ){uri ->
+    ) { uri: Uri? ->
         if (uri != null){
             view?.findViewById<ImageView>(R.id.imagemSelecionada)?.setImageURI(uri)
-            uriImagemSelecionada = uri
             Toast.makeText(requireContext(), "Imagem selecionada.", Toast.LENGTH_SHORT).show()
-
+            uri?.let {
+                uriModificada = uri
+            }
         }else{
             Toast.makeText(requireContext(), "Nenhuma imagem selecionada.", Toast.LENGTH_SHORT).show()
-            uriImagemSelecionada = null
         }
     }
 
+    ////// implantar interface
+    interface OnDataPass {
+        fun onDataPass(data: MutableList<String>)
+    }
+    private lateinit var dataPasser: OnDataPass
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            dataPasser = context as OnDataPass
+        }catch (e: ClassCastException){
+            throw ClassCastException("$context deve implementar OndataPass")
+        }
+    }
+    //////////////////////////////////
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // capturar idProduto para ser o nome da pasta para salvar fotos
         idPasta = arguments?.getString("idPastaDeFotos")
-        Log.i("saida", "Fragmento -- $idPasta")
-
-
-        val lista = mutableListOf<Mensagem>(
-            Mensagem("Fabricio", "Oi", "25/05/2022"),
-            Mensagem("José", "Oi tudo bem?", "25/08/2022"),
-            //Mensagem("Maria", "Boa tarde", "25/05/2023"),
-            //Mensagem("Pedro", "Boa noite", "15/08/2023")
-        )
-
-
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_adicionar_fotos, container, false)
+
+        recyclerView = view.findViewById(R.id.rv_tela_imagens)
+        recyclerView.layoutManager = LinearLayoutManager(
+            context,
+            RecyclerView.HORIZONTAL,
+            false
+        )
+        imagemAdapter = ImagemAdapter(imagemUris)
+        recyclerView.adapter = imagemAdapter
+
         capturarGaleria = view.findViewById(R.id.imagemGaleria)
         capturarGaleria.setOnClickListener {
             abrirGaleria.launch("image/*")
-        }
-
-
-
-        ////////////
-
-        botaoUpload = view.findViewById<Button?>(R.id.btnUploadImagem)
-        botaoUpload.setOnClickListener {
-            uploadGaleria()
-            //nomearArquivo()
         }
 
         botaoAPagar = view.findViewById(R.id.btnApagarFoto)
         botaoAPagar.setOnClickListener {
             view.findViewById<ImageView>(R.id.imagemSelecionada).setImageURI(null)
             uriImagemSelecionada = null
+
         }
 
         botaoConfirmarFoto = view.findViewById(R.id.btnConfirmarFoto)
         botaoConfirmarFoto.setOnClickListener {
-            imagemProduto1 = view.findViewById(R.id.imageProduto1)
-            imagemProduto1.setImageURI(uriImagemSelecionada)
+            imagemUris.add(uriModificada)
+            imagemAdapter.notifyItemInserted(imagemUris.size - 1)
         }
-        imagemProduto2 = view.findViewById(R.id.imageProduto2)
 
-
-        ////////////////// Recycle view
-        /*val layoutManager = LinearLayoutManager(context)
-        recyclerView = view.findViewById(R.id.rv_tela_imagens)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
-        adapter = ImagemAdapter(novoArrayList)
-        recyclerView.adapter = adapter*/
-        //////////////////////
-
+        botaoUpload = view.findViewById(R.id.btnUploadImagem)
+        botaoUpload.setOnClickListener {
+            uploadGaleria()
+            uriImagemSelecionada = null
+        }
 
         return view
     }
 
-    private fun visualizarImagensGravadas(url: Uri) {
-        Picasso.get()
-            .load(url)
-            .into(imagemProduto2)
-        //listaImagens.add(imagemProduto2)
-        val caminho = armazenamento.getReference("produtos")
-            .child(idPasta.toString())
 
-
+    private fun uploadGaleria() {
+        val imagemUrls = mutableListOf<String>()
+        var contador = 0
+        imagemUris.forEach{ uri ->
+            val fileName = UUID.randomUUID().toString() + ".jpg"
+            //val fileName = nomearArquivo()
+            val imageRef = armazenamento
+                .getReference("fotos")
+                .child("$idPasta/$fileName")
+            imageRef.putFile(uri)
+                .addOnSuccessListener {
+                    imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
+                        imagemUrls.add(downloadUrl.toString())
+                        contador++
+                        if (contador == imagemUris.size){
+                            salvarNoStorage(imagemUrls)
+                            //Toast.makeText(requireContext(), "Secesso ao fazer up-load da imagem", Toast.LENGTH_SHORT).show()
+                            activity?.supportFragmentManager
+                                ?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                        }
+                    }
+                }
+                .addOnFailureListener{
+                    Toast.makeText(context, "Erro ao fazer upload: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
+    ////////////// interface
+    private fun passDataToActivity(data: MutableList<String>){
+        dataPasser.onDataPass(data)
+    }
 
-    private fun eventosClique() {
+    private fun salvarNoStorage(imagemUrls: MutableList<String>) {
+        val imagesMap = hashMapOf(
+            "images" to imagemUrls
+        )
+        ///////////////// interface
+        passDataToActivity(imagemUrls)
+        ///////////////////
+    }
+    //////////////////////////////////
+
+
+    //// Rascunho
+    /*private fun nomearArquivo(): String {
+        val calendar = Calendar.getInstance()
+        val current = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.of(
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH),
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND),
+                )
+        } else {
+            Log.i("saida","Versão errada!!!!")
+        }
+        val dataAtual = current.toString()
+            .replace(":","")
+            .replace("-","")
+            .replace("T","_")
+        var nomeArquivo = "imagem_$dataAtual.jpg"
+        return nomeArquivo
+    }*/
+
+    /*private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            view?.findViewById<ImageView>(R.id.imagemSelecionada)?.setImageURI(uri)
+            uriImagemSelecionada = uri
+            uriModificada = uriImagemSelecionada.toString()
+            Log.i("saida", "$uriModificada")
+            Toast.makeText(requireContext(), "Imagem selecionada.", Toast.LENGTH_SHORT).show()
+
+        } else {
+            Toast.makeText(requireContext(), "Nenhuma imagem selecionada.", Toast.LENGTH_SHORT)
+                .show()
+            uriImagemSelecionada = null
+        }
+    }*/
+
+    /*
+       if (uriImagemSelecionada != null) {
+           armazenamento
+               .getReference("fotos")
+               .child(idPasta.toString())
+               .child(nomearArquivo())
+               .putFile(uriImagemSelecionada!!)
+               .addOnSuccessListener { task ->
+                   Toast.makeText(requireContext(), "Secesso ao fazer up-load da imagem", Toast.LENGTH_SHORT).show()
+                   task.metadata?.reference?.downloadUrl
+                       ?.addOnSuccessListener { urlFirebase ->
+                       Toast.makeText(requireContext(), "$urlFirebase", Toast.LENGTH_SHORT).show()
+                           visualizarImagensGravadas(urlFirebase)
+                       }
+               }.addOnFailureListener{erro ->
+                   Toast.makeText(requireContext(), "Erro ao fazer up-load da imagem", Toast.LENGTH_SHORT).show()
+               }
+       }else{
+           Toast.makeText(requireContext(), "Não há imagem selecionada.", Toast.LENGTH_SHORT).show()
+           Log.i("saida", "Não há imagem selecionada.")
+       }*/
+
+    /*private fun eventosClique() {
         var opcao: Int = 0
         when (id) {
             (R.id.btnConfirmarFoto) -> {
@@ -170,64 +243,8 @@ class AdicionarFotosFragment() : Fragment() {
             (R.id.imagemGaleria) -> {
                 opcao = 3
                 Log.i("saida","Caturar Imagem -- $id")
-                }
             }
+        }
         Log.i("saida","$opcao")
-    }
-
-    private fun apagarImagem() {
-        Log.i("saida","Estou em apagar fotos.")
-    }
-
-    private fun cadastrarImagem() {
-        Log.i("saida","Estou em CADASTRAR fotos.")
-    }
-
-    private fun uploadGaleria() {
-        Log.i("saida","$uriImagemSelecionada")
-        if (uriImagemSelecionada != null) {
-            armazenamento
-                .getReference("fotos")
-                .child(idPasta.toString())
-                .child(nomearArquivo())
-                .putFile(uriImagemSelecionada!!)
-                .addOnSuccessListener { task ->
-                    Toast.makeText(requireContext(), "Secesso ao fazer up-load da imagem", Toast.LENGTH_SHORT).show()
-                    task.metadata?.reference?.downloadUrl
-                        ?.addOnSuccessListener { urlFirebase ->
-                        Toast.makeText(requireContext(), "$urlFirebase", Toast.LENGTH_SHORT).show()
-                            visualizarImagensGravadas(urlFirebase)
-                        }
-                }.addOnFailureListener{erro ->
-                    Toast.makeText(requireContext(), "Erro ao fazer up-load da imagem", Toast.LENGTH_SHORT).show()
-                }
-        }else{
-            Toast.makeText(requireContext(), "Não há imagem selecionada.", Toast.LENGTH_SHORT).show()
-            Log.i("saida", "Não há imagem selecionada.")
-        }
-    }
-
-    private fun nomearArquivo(): String {
-        val calendar = Calendar.getInstance()
-        val current = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime.of(
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH),
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                calendar.get(Calendar.SECOND),
-                )
-        } else {
-            Log.i("saida","Versão errada!!!!")
-        }
-        Log.i("saida","current -- $current")
-        val dataAtual = current.toString()
-            .replace(":","")
-            .replace("-","")
-            .replace("T","_")
-        Log.i("saida","data -- $dataAtual")
-        var nomeArquivo = "foto_$dataAtual.jpg"
-        return nomeArquivo
-    }
+    }*/
 }

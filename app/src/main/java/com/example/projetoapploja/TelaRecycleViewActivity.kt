@@ -2,7 +2,6 @@ package com.example.projetoapploja
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,14 +13,7 @@ import com.example.projetoapploja.databinding.ActivityTelaRecycleViewBinding
 class TelaRecycleViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTelaRecycleViewBinding
-    private lateinit var mensagemAdapter: MensagemAdapter
-
-    // aqui vamos fazer com que o app va em busca de atutalizacao na API
-    /*override fun onStart() {
-        super.onStart()
-        atualizar.....
-    }*/
-
+    //private lateinit var mensagemAdapter: MensagemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +21,15 @@ class TelaRecycleViewActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // itens para inflar o item de perfil
-        val lista = mutableListOf<Mensagem>(
+       /* val lista = mutableListOf<Mensagem>(
             Mensagem("Fabricio", "Oi", "25/05/2022"),
             Mensagem("José", "Oi tudo bem?", "25/08/2022"),
             //Mensagem("Maria", "Boa tarde", "25/05/2023"),
             //Mensagem("Pedro", "Boa noite", "15/08/2023")
-        )
+        )*/
 
         // enviados dados dos itens para o recycleview
-        mensagemAdapter = MensagemAdapter{ nome ->
+        /*mensagemAdapter = MensagemAdapter{ nome ->
             Toast.makeText(this, "Olá $nome", Toast.LENGTH_SHORT).show()
 
             // enviando dados para outra tela
@@ -46,13 +38,13 @@ class TelaRecycleViewActivity : AppCompatActivity() {
 
             // abrir outra tela
             startActivity(intent)
-        }
+        }*/
 
         // atualizando lista (NO CASO FINAL USA-SE ONSTART )
-        mensagemAdapter.atualizarListaDados(lista)
+        //mensagemAdapter.atualizarListaDados(lista)
 
         // obtendo itens para o recycle view
-        binding.rvLista.adapter = mensagemAdapter
+        //binding.rvLista.adapter = mensagemAdapter
 
         //configurando layout da tela
         binding.rvLista.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
@@ -65,7 +57,7 @@ class TelaRecycleViewActivity : AppCompatActivity() {
         )
 
         // simular atualizacao da lista com o botao EXECUTAR
-        with(binding) {
+        /*with(binding) {
             btnExecutar.setOnClickListener {
                 mensagemAdapter.atualizarListaDados(lista)
             }
@@ -82,7 +74,7 @@ class TelaRecycleViewActivity : AppCompatActivity() {
                     intent
                 )
             }
-        }
+        }*/
     }
 
     // caixa de dialogo para confirmar exclusao de item

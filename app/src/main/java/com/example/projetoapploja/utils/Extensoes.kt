@@ -2,7 +2,6 @@ package com.example.projetoapploja.utils
 
 import android.app.Activity
 import android.widget.Toast
-import com.example.projetoapploja.Mensagem
 
 fun Activity.exibirMensagem(mensagem: String){
     Toast.makeText(

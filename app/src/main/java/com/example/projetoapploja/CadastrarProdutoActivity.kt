@@ -1,5 +1,6 @@
 package com.example.projetoapploja
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,7 @@ import com.example.projetoapploja.utils.exibirMensagem
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
+class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, AdicionarFotosFragment.OnDataPass {
 
     private val binding by lazy {
         ActivityCadastrarProdutoBinding.inflate(layoutInflater)
@@ -22,6 +23,10 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
     private val firestore by lazy {
         FirebaseFirestore.getInstance()
     }
+
+    //private lateinit var listaImagens: HashMap<String, MutableList<String>>
+    private var listaImagens: MutableList<String> = mutableListOf()
+    private lateinit var pastaProdutos: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,13 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
             setDisplayHomeAsUpEnabled(true)
         }
     }
+    // Lidando com o clique no botão de voltar
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed() // Volta ao fragmento anterior
+        return true
+    }
+
+
 
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
         val referencia = firestore.collection("produtos").document()
@@ -68,28 +80,103 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface {
             generoProduto,
             novidadeProduto,
             modeloProduto,
+            mutableListOf()
         )
+        cadastrarProduto(produto)
+    }
+
+    //override fun onDataPass(data: HashMap<String, MutableList<String>>) {
+    override fun onDataPass(data: MutableList<String>) {
+        listaImagens = data
+        processarImagens()
+        Log.i("saida", "ondapass no activity\n $listaImagens")
+    }
+
+    private fun processarImagens() : MutableList<String> {
+        if (listaImagens.isNotEmpty()){
+            Log.i("saida", "procesar imagens \n $listaImagens")
+            atualizarImagens(listaImagens)
+            return listaImagens
+        }
+        Log.i("saida", "procesar vazio \n $listaImagens")
+        return mutableListOf()
+
+
+    }
+
+    private fun atualizarImagens(listaImagens: MutableList<String>) {
+        val listaAtualizada = listaImagens
+
+        Log.i("saida", "atualizada: $listaAtualizada")
+        Log.i("saida", "atualizada: $pastaProdutos")
+
+
+        val docReferencia = firestore.collection("produtos").document(pastaProdutos)
+        docReferencia.update("imagemUrl", listaAtualizada)
+            .addOnSuccessListener {
+                exibirMensagem("Imagens atualizadas no Banco de dados")
+                listaImagens.clear()
+                atualizarPastasDocumentos()
+            }.addOnFailureListener {
+                exibirMensagem("Não foi possivel atualizar")
+
+            }
+
+    }
+
+    private fun atualizarPastasDocumentos(){
+        val colecaoReferencia = firestore.collection("produtos")
+        colecaoReferencia.get()
+            .addOnSuccessListener { resultado ->
+                if(!resultado.isEmpty){
+                    for (documento in resultado){
+                        val imagensProdutos = documento.data.getValue("imagemUrl") as? ArrayList<String>
+                        if (imagensProdutos != null){
+                            if (imagensProdutos.isEmpty()){
+                                colecaoReferencia.document(documento.id)
+                                    .delete()
+                                    .addOnSuccessListener {
+                                        Log.i("saida", "Documento vazio removidao com sucesso.")
+                                    }.addOnFailureListener { e ->
+                                        Log.i("saida", "Erro ao apagar: ${e.message}")
+                                    }
+                            }
+                        }
+                    }
+                }else{
+                    Log.i("saida","Nenhum documento encontrado na coleção.")
+                }
+            }.addOnFailureListener { e ->
+                Log.i("saida","Erro ao listar documento: ${e.message}")
+            }
+    }
+
+    private fun cadastrarProduto(produto: Produto){
+        if (listaImagens.isNotEmpty()) {
+            produto.imagemUrl = listaImagens
+        }
+        Log.i("saida","$produto")
         firestore
             .collection( "produtos")
-            .document(idProduto)
+            .document(produto.idProduto)
             .set(produto)
             .addOnSuccessListener {
                 exibirMensagem("Favor inserir as fotos do produto.")
                 val adicionarFotosFragment = AdicionarFotosFragment()
                 val bundle = bundleOf(
-                    "idPastaDeFotos" to idProduto
+                    "idPastaDeFotos" to produto.idProduto
                 )
-                Log.i("saida", "Activity -- $bundle")
                 adicionarFotosFragment.arguments = bundle
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fl_cadastro, adicionarFotosFragment)
+                    .addToBackStack(null)
                     .commit()
                 //startActivity(Intent(applicationContext, CadastrarProdutoActivity::class.java))
             }.addOnFailureListener {
                 exibirMensagem("Erro ao fazer seu cadastro.")
             }
+        pastaProdutos = produto.idProduto
     }
-
     /*
    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
        menuInflater.inflate(R.menu.menu_alternativo, menu)

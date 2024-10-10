@@ -1,6 +1,7 @@
 package com.example.projetoapploja.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +48,9 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
         botaoVoltar.setOnClickListener {
             val fragment = CadastrarProdutoTela1Fragment()
             val transition = fragmentManager?.beginTransaction()
-            transition?.replace(R.id.fl_cadastro, fragment)?.commit()
+            transition?.replace(R.id.fl_cadastro, fragment)
+                ?.addToBackStack(null)
+                ?.commit()
         }
         botaoCancelar.setOnClickListener {
             view.findViewById<RadioGroup>(R.id.switchNovidade).clearCheck()
