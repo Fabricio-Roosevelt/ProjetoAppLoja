@@ -23,8 +23,6 @@ class ContatosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
     }
-
 
 }

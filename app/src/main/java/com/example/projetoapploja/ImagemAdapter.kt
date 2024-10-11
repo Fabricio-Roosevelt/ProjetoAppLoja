@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 
 class ImagemAdapter (
@@ -24,7 +23,6 @@ class ImagemAdapter (
 
     override fun onBindViewHolder(holder: ImagemViewHolder, position: Int) {
         val imagemUri = imagemUris[position]
-
         Glide.with(holder.imagemView.context)
             .load(imagemUri)
             .into(holder.imagemView)
@@ -33,7 +31,6 @@ class ImagemAdapter (
     override fun getItemCount(): Int {
         return imagemUris.size
     }
-
 
 }
 

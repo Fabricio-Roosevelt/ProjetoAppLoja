@@ -3,16 +3,13 @@ package com.example.projetoapploja
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projetoapploja.databinding.ActivityTelaAdministrativaBinding
 import com.example.projetoapploja.models.Usuario
 import com.example.projetoapploja.utils.exibirMensagem
-import com.example.projetoapploja.utils.validarSuperUsuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 
 

@@ -1,6 +1,5 @@
 package com.example.projetoapploja
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +23,6 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
         FirebaseFirestore.getInstance()
     }
 
-    //private lateinit var listaImagens: HashMap<String, MutableList<String>>
     private var listaImagens: MutableList<String> = mutableListOf()
     private lateinit var pastaProdutos: String
 
@@ -62,8 +60,6 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
         return true
     }
 
-
-
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
         val referencia = firestore.collection("produtos").document()
         val idProduto = referencia.id
@@ -85,32 +81,24 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
         cadastrarProduto(produto)
     }
 
-    //override fun onDataPass(data: HashMap<String, MutableList<String>>) {
+    // recebendo dados da galeria de fotos
     override fun onDataPass(data: MutableList<String>) {
         listaImagens = data
         processarImagens()
-        Log.i("saida", "ondapass no activity\n $listaImagens")
     }
 
+    // copiando imagens recebidas para a uma lista que será adicionada ao firebase
     private fun processarImagens() : MutableList<String> {
         if (listaImagens.isNotEmpty()){
-            Log.i("saida", "procesar imagens \n $listaImagens")
             atualizarImagens(listaImagens)
             return listaImagens
         }
-        Log.i("saida", "procesar vazio \n $listaImagens")
         return mutableListOf()
-
-
     }
 
+    // atualiza array de imagens na tabela do firebase
     private fun atualizarImagens(listaImagens: MutableList<String>) {
         val listaAtualizada = listaImagens
-
-        Log.i("saida", "atualizada: $listaAtualizada")
-        Log.i("saida", "atualizada: $pastaProdutos")
-
-
         val docReferencia = firestore.collection("produtos").document(pastaProdutos)
         docReferencia.update("imagemUrl", listaAtualizada)
             .addOnSuccessListener {
@@ -119,11 +107,10 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
                 atualizarPastasDocumentos()
             }.addOnFailureListener {
                 exibirMensagem("Não foi possivel atualizar")
-
             }
-
     }
 
+    // remover quaisquer cadastro adicionados sem imagens
     private fun atualizarPastasDocumentos(){
         val colecaoReferencia = firestore.collection("produtos")
         colecaoReferencia.get()
@@ -136,7 +123,7 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
                                 colecaoReferencia.document(documento.id)
                                     .delete()
                                     .addOnSuccessListener {
-                                        Log.i("saida", "Documento vazio removidao com sucesso.")
+                                        Log.i("saida", "Documento vazio removido com sucesso.")
                                     }.addOnFailureListener { e ->
                                         Log.i("saida", "Erro ao apagar: ${e.message}")
                                     }
@@ -151,11 +138,12 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
             }
     }
 
+    // cadastra os produtos no base de dados - firebase
     private fun cadastrarProduto(produto: Produto){
         if (listaImagens.isNotEmpty()) {
             produto.imagemUrl = listaImagens
         }
-        Log.i("saida","$produto")
+        //Log.i("saida","$produto")
         firestore
             .collection( "produtos")
             .document(produto.idProduto)
@@ -171,12 +159,12 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
                     .replace(R.id.fl_cadastro, adicionarFotosFragment)
                     .addToBackStack(null)
                     .commit()
-                //startActivity(Intent(applicationContext, CadastrarProdutoActivity::class.java))
             }.addOnFailureListener {
                 exibirMensagem("Erro ao fazer seu cadastro.")
             }
         pastaProdutos = produto.idProduto
     }
+
     /*
    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
        menuInflater.inflate(R.menu.menu_alternativo, menu)

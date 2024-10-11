@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.projetoapploja.databinding.ActivityPrimeiraTelaBinding
+import com.example.projetoapploja.fragments.PesquisaFragment
 
 
 class PrimeiraTelaActivity : AppCompatActivity() {
@@ -29,6 +30,7 @@ class PrimeiraTelaActivity : AppCompatActivity() {
         }
         binding.btnPesquisaGenerica.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+
         }
         binding.textContatos.setOnClickListener {
             startActivity(Intent(this, ContatosActivity::class.java))

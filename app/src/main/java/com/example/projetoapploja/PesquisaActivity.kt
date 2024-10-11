@@ -3,14 +3,10 @@ package com.example.projetoapploja
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.projetoapploja.databinding.ActivityMainBinding
 import com.example.projetoapploja.databinding.ActivityPesquisaBinding
-import com.example.projetoapploja.fragments.AdicaoItemFragment
-import com.example.projetoapploja.fragments.EdicaoItemFragment
 import com.example.projetoapploja.fragments.PesquisaFragment
 
 

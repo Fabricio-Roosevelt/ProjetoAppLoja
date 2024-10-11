@@ -1,7 +1,6 @@
 package com.example.projetoapploja.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +22,6 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
         "novidade" to "",
         "modelo" to ""
     )
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -103,6 +98,5 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
         val mensagem = listaCadastro
     }
-
 
 }

@@ -2,22 +2,13 @@ package com.example.projetoapploja
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.projetoapploja.databinding.ActivityLoginBinding
-import com.example.projetoapploja.databinding.ActivityMainBinding
-import com.example.projetoapploja.fragments.AdicaoItemFragment
-import com.example.projetoapploja.fragments.EdicaoItemFragment
-import com.example.projetoapploja.models.Usuario
 import com.example.projetoapploja.utils.exibirMensagem
 import com.example.projetoapploja.utils.validarSuperUsuario
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,8 +28,6 @@ class LoginActivity : AppCompatActivity() {
         inicializarEventosClique()
 
     }
-
-
 
     private fun inicializarEventosClique() {
         binding.textCadastrarFuncionario.setOnClickListener {
@@ -100,6 +89,5 @@ class LoginActivity : AppCompatActivity() {
             binding.textInputEmailCliente.error = "Preencha o email"
             return false
         }
-
     }
 }

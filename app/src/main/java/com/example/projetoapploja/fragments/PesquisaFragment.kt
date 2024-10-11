@@ -23,11 +23,6 @@ class PesquisaFragment : Fragment() {
     private lateinit var textPesquisa: TextView
     private lateinit var editPesquisa: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

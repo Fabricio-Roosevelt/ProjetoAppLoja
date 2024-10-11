@@ -20,9 +20,7 @@ class CadastroClienteActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCadastroClienteBinding.inflate(layoutInflater)
     }
-    private val firebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
+
     private val firestore by lazy {
         FirebaseFirestore.getInstance()
     }
@@ -37,7 +35,6 @@ class CadastroClienteActivity : AppCompatActivity() {
         inicializarToolbar()
         eventosClique()
     }
-
 
     private fun eventosClique() {
         binding.btnCadastrarCliente.setOnClickListener {

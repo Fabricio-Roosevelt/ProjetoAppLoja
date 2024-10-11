@@ -10,7 +10,6 @@ import com.example.projetoapploja.databinding.ActivityMainBinding
 import com.example.projetoapploja.fragments.AdicaoItemFragment
 import com.example.projetoapploja.fragments.EdicaoItemFragment
 import com.example.projetoapploja.fragments.PesquisaFragment
-import com.example.projetoapploja.fragments.TesteFragment
 
 
 class MainActivity : AppCompatActivity(), MinhaInterface {
@@ -28,35 +27,29 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
         inicializarToolbar()
         //abrirFragmentPesquisa()
         //abrirFragmentContatos()
 
         /////////////////////////
         textoVindoDoFragment = findViewById(R.id.textRetornoFragment)
-        abrirFragmentTeste(EdicaoItemFragment())
+        abrirFragmentPesquisa(EdicaoItemFragment())
         /////////////////////////
-
     }
 
-
-
-    private fun abrirFragmentTeste(fragment: Fragment) {
+    private fun abrirFragmentPesquisa(fragment: Fragment) {
         val fragmentTransation = supportFragmentManager.beginTransaction()
         fragmentTransation.replace(R.id.fragment_conteudo, fragment)
         fragmentTransation.commit()
     }
 
-
     private fun abrirFragmentContatos() {
         // inicializar Fragment
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_conteudo, TesteFragment())
+            .replace(R.id.fragment_conteudo, AdicaoItemFragment())
             .commit()
     }
-
 
     private fun abrirFragmentPesquisa() {
         // inicializar Fragment
@@ -65,7 +58,6 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
             .replace(R.id.fragment_conteudo, PesquisaFragment())
             .commit()
     }
-
 
     private fun inicializarToolbar() {
         val toolbar = binding.includeActionbar.tbPrincipal
@@ -78,48 +70,11 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
         }
     }
 
-   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_principal, menu)
-        supportActionBar?.apply {
-            title = "Pesquisar"
-            setDisplayHomeAsUpEnabled(true)
-        }
-
-        binding.includeActionbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.itemAdicionar -> {
-                    abrirTelaAdicaoItem()
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.itemEditar -> {
-                    abrirTelaEdicaoItem()
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.itemPesquisar -> {
-                    abrirTelaCadastro()
-                    return@setOnMenuItemClickListener true
-                }
-                else -> {
-                    return@setOnMenuItemClickListener true
-                }
-            }
-        }
-        return true
-    }*/
-
     private fun abrirTelaAdicaoItem() {
         // inicializar Fragment
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_conteudo, AdicaoItemFragment())
-            .commit()
-    }
-
-    private fun abrirTelaEdicaoItem() {
-        // inicializar Fragment
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_conteudo, EdicaoItemFragment())
             .commit()
     }
 
@@ -147,5 +102,42 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
             abrirFragmentContatos()
         }
     }
+
+    // rascunho
+    /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+         menuInflater.inflate(R.menu.menu_principal, menu)
+         supportActionBar?.apply {
+             title = "Pesquisar"
+             setDisplayHomeAsUpEnabled(true)
+         }
+
+         binding.includeActionbar.tbAlternativa.setOnMenuItemClickListener { menuItem ->
+             when(menuItem.itemId){
+                 R.id.itemAdicionar -> {
+                     abrirTelaAdicaoItem()
+                     return@setOnMenuItemClickListener true
+                 }
+                 R.id.itemEditar -> {
+                     abrirTelaEdicaoItem()
+                     return@setOnMenuItemClickListener true
+                 }
+                 R.id.itemPesquisar -> {
+                     abrirTelaCadastro()
+                     return@setOnMenuItemClickListener true
+                 }
+                 else -> {
+                     return@setOnMenuItemClickListener true
+                 }
+             }
+         }
+         return true
+     }
+    private fun abrirTelaEdicaoItem() {
+        // inicializar Fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_conteudo, EdicaoItemFragment())
+            .commit()
+    }*/
 
 }
