@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
 
         /////////////////////////
         textoVindoDoFragment = findViewById(R.id.textRetornoFragment)
-        abrirFragmentPesquisa(EdicaoItemFragment())
+        abrirFragmentPesquisa(PesquisaFragment())
         /////////////////////////
     }
 
@@ -78,13 +78,6 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
             .commit()
     }
 
-    private fun abrirTelaCadastro(){
-        // inicializar Fragment
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_conteudo, EdicaoItemFragment())
-            .commit()
-    }
 
     ///testes
     override fun transferirMensagem(msg: String) {
@@ -95,8 +88,6 @@ class MainActivity : AppCompatActivity(), MinhaInterface {
                 abrirTelaAdicaoItem()
             } else if (msg == "Pesquisa"){
                 abrirFragmentPesquisa()
-            } else{
-                abrirTelaCadastro()
             }
         } else {
             abrirFragmentContatos()

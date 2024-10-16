@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/image_perfil"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
@@ -18,15 +18,37 @@
         app:srcCompat="@drawable/perfil" />
 
     <TextView
-        android:id="@+id/text_nome"
+        android:id="@+id/text_marca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="8dp"
         android:text="Fabricio Roosevelt"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/image_perfil"
         app:layout_constraintTop_toTopOf="@+id/image_perfil" />
+
+    <TextView
+        android:id="@+id/text_tipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/text_marca"
+        app:layout_constraintStart_toEndOf="@+id/image_perfil"
+        app:layout_constraintStart_toStartOf="@+id/text_marca"
+        app:layout_constraintTop_toBottomOf="@+id/text_marca" />
+
+    <TextView
+        android:id="@+id/text_genero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/text_tipo"
+        app:layout_constraintStart_toEndOf="@+id/image_perfil"
+        app:layout_constraintStart_toStartOf="@+id/text_tipo"
+        app:layout_constraintTop_toBottomOf="@+id/text_tipo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

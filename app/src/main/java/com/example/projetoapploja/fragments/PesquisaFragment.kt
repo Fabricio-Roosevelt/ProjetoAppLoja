@@ -37,10 +37,8 @@ class PesquisaFragment : Fragment() {
 
 
         view.findViewById<Button>(R.id.btn_avancar_tela2).setOnClickListener {
-            textPesquisa.text = editPesquisa.text.toString()
-            editPesquisa.text = ""
-            val result = "result"
-
+            val result = editPesquisa.text.toString()
+            enviarDadosParaPesquisa(result)
         }
         view.findViewById<Button>(R.id.btn_voltar).setOnClickListener {
 
@@ -51,9 +49,19 @@ class PesquisaFragment : Fragment() {
         view.findViewById<Button>(R.id.btnCancelar).setOnClickListener {
             editPesquisa.text = ""
         }
-
-
         return view
+    }
+
+    private fun enviarDadosParaPesquisa(result: String) {
+        val bundle = Bundle()
+        bundle.putString("pesquisar", result)
+
+        val fragment = ResultadoPesquisaFragment()
+        fragment.arguments = bundle
+        val transition = fragmentManager?.beginTransaction()
+        transition?.replace(R.id.fragment_conteudo, fragment)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 
     // testes de encerramento do fragment
