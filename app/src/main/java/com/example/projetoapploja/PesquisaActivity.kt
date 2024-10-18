@@ -1,5 +1,11 @@
 package com.example.projetoapploja
 
+import FEMININO
+import INFANTIL
+import MASCULINO
+import OCULOS_DE_GRAU
+import OCULOS_SOLAR
+import UNISSEX
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -75,10 +81,10 @@ class PesquisaActivity : AppCompatActivity() {
         val idItemSelecionado = binding.rgSexo.checkedRadioButtonId
         val itemSelecionado: String?
         when( idItemSelecionado){
-            R.id.rbMasculino -> itemSelecionado = "Masculino"
-            R.id.rbFeminino -> itemSelecionado = "Feminino"
-            R.id.rbUnissex -> itemSelecionado = "Unissex"
-            R.id.rbInfantil -> itemSelecionado = "Infantil"
+            R.id.rbMasculino -> itemSelecionado = MASCULINO
+            R.id.rbFeminino -> itemSelecionado = FEMININO
+            R.id.rbUnissex -> itemSelecionado = UNISSEX
+            R.id.rbInfantil -> itemSelecionado = INFANTIL
             else -> itemSelecionado = null
         }
         if (itemSelecionado != null) {
@@ -92,8 +98,8 @@ class PesquisaActivity : AppCompatActivity() {
         val idTipoProdutoSelecionado = binding.rgTipoOculos.checkedRadioButtonId
         val tipoProdutoSelecionado: String?
         when(idTipoProdutoSelecionado){
-            R.id.rbOculosGrau -> tipoProdutoSelecionado = "Oculos de grau"
-            R.id.rbOculosSolar -> tipoProdutoSelecionado = "Oculos solar"
+            R.id.rbOculosGrau -> tipoProdutoSelecionado = OCULOS_DE_GRAU
+            R.id.rbOculosSolar -> tipoProdutoSelecionado = OCULOS_SOLAR
             else -> tipoProdutoSelecionado = null
         }
         if (tipoProdutoSelecionado != null) {

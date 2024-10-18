@@ -1,5 +1,14 @@
 package com.example.projetoapploja
 
+import ERRO_EMAIL_DUPLICADO
+import ERRO_EMAIL_INVALIDO
+import ERRO_NOME_VAZIO
+import ERRO_SENHAS_DIFERENTES
+import ERRO_SENHA_FRACA
+import ERRO_SENHA_VAZIA
+import SUPERUSER
+import USUARIO_CADASTRO_SUCESSO
+import USUARIO_ERRO_CADASTRO
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -67,7 +76,7 @@ class CadastrarFuncionarioActivity : AppCompatActivity() {
             binding.textInputUsuario.error = null
             return true
         }else{
-            binding.textInputUsuario.error = "Nome não pode ser vazio."
+            binding.textInputUsuario.error = ERRO_NOME_VAZIO
             return false
         }
     }
@@ -81,11 +90,11 @@ class CadastrarFuncionarioActivity : AppCompatActivity() {
                 binding.textInputConfirmarSenha.error = null
                 return true
             }else{
-                binding.textInputConfirmarSenha.error = "As senhas estão diferetes."
+                binding.textInputConfirmarSenha.error = ERRO_SENHAS_DIFERENTES
                 return false
             }
         } else{
-            binding.textInputSenha.error = "A senha não pode ser vazia"
+            binding.textInputSenha.error = ERRO_SENHA_VAZIA
             return false
         }
     }
@@ -109,13 +118,13 @@ class CadastrarFuncionarioActivity : AppCompatActivity() {
                     throw erro
                 } catch (erroSenhaFraca: FirebaseAuthWeakPasswordException) {
                     erroSenhaFraca.printStackTrace()
-                    exibirMensagem("Senha fraca, digite outra com letras, número e caracteres especiais")
+                    exibirMensagem(ERRO_SENHA_FRACA)
                 } catch (erroUsuarioExistente: FirebaseAuthUserCollisionException) {
                     erroUsuarioExistente.printStackTrace()
-                    exibirMensagem("E-mail já percente a outro usuário")
+                    exibirMensagem(ERRO_EMAIL_DUPLICADO)
                 } catch (erroCredenciaisInvalidas: FirebaseAuthInvalidCredentialsException) {
                     erroCredenciaisInvalidas.printStackTrace()
-                    exibirMensagem("E-mail inválido, digite um outro e-mail")
+                    exibirMensagem(ERRO_EMAIL_INVALIDO)
                 }
             }
         }
@@ -123,15 +132,15 @@ class CadastrarFuncionarioActivity : AppCompatActivity() {
 
     private fun salvarFuncionarioFirestores(usuario: Usuario) {
         firestore
-            .collection("superuser")
+            .collection(SUPERUSER)
             .document(usuario.id)
             .set(usuario)
             .addOnSuccessListener {
-                exibirMensagem("Usuario cadastrado com sucesso!")
+                exibirMensagem(USUARIO_CADASTRO_SUCESSO)
                 startActivity(Intent(applicationContext, LoginActivity::class.java))
 
             }.addOnFailureListener {
-                exibirMensagem("Erro ao fazer seu cadastro.")
+                exibirMensagem(USUARIO_ERRO_CADASTRO)
             }
     }
 }

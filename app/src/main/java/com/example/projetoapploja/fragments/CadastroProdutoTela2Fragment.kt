@@ -1,5 +1,12 @@
 package com.example.projetoapploja.fragments
 
+import MARCA
+import MODELO
+import NAO
+import NOVIDADE
+import SEXO
+import SIM
+import TIPO
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +23,11 @@ import com.google.android.material.textfield.TextInputEditText
 class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
 
     var listaCadastro = mutableMapOf(
-        "marca" to "",
-        "tipo" to "",
-        "sexo" to "",
-        "novidade" to "",
-        "modelo" to ""
+        MARCA to "",
+        TIPO to "",
+        SEXO to "",
+        NOVIDADE to "",
+        MODELO to ""
     )
 
     override fun onCreateView(
@@ -31,9 +38,9 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
         val view =inflater.inflate(R.layout.fragment_cadastro_produto_tela2, container, false)
         // pegar primeiros dados da lista do novo produto
         val args = this.arguments
-        listaCadastro.put("marca", args?.get("marca").toString())
-        listaCadastro.put("tipo", args?.get("tipo").toString())
-        listaCadastro.put("sexo", args?.get("sexo").toString())
+        listaCadastro.put(MARCA, args?.get(MARCA).toString())
+        listaCadastro.put(TIPO, args?.get(TIPO).toString())
+        listaCadastro.put(SEXO, args?.get(SEXO).toString())
 
         val botaoVoltar : Button = view.findViewById(R.id.btn_tela_produto_2)
         val botaoCancelar : Button = view.findViewById(R.id.btnCadastroCancelar)
@@ -62,16 +69,16 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
 
     private fun enviarCadastro() {
         val bundle = Bundle()
-        val cadastroMarca : String = listaCadastro.get("marca").toString()
-        val cadastroTipo : String = listaCadastro.get("tipo").toString()
-        val cadastroGenero : String = listaCadastro.get("sexo").toString()
-        val cadastroNovidade : String = listaCadastro.get("novidade").toString()
-        val cadastroModelo : String = listaCadastro.get("modelo").toString()
-        bundle.putString("marca", cadastroMarca)
-        bundle.putString("tipo", cadastroTipo)
-        bundle.putString("sexo", cadastroGenero)
-        bundle.putString("novidade", cadastroNovidade)
-        bundle.putString("modelo", cadastroModelo)
+        val cadastroMarca : String = listaCadastro.get(MARCA).toString()
+        val cadastroTipo : String = listaCadastro.get(TIPO).toString()
+        val cadastroGenero : String = listaCadastro.get(SEXO).toString()
+        val cadastroNovidade : String = listaCadastro.get(NOVIDADE).toString()
+        val cadastroModelo : String = listaCadastro.get(MODELO).toString()
+        bundle.putString(MARCA, cadastroMarca)
+        bundle.putString(TIPO, cadastroTipo)
+        bundle.putString(SEXO, cadastroGenero)
+        bundle.putString(NOVIDADE, cadastroNovidade)
+        bundle.putString(MODELO, cadastroModelo)
 
         val minhaInterface: ProdutosNovosInsterface = activity as ProdutosNovosInsterface
         minhaInterface.transferirDadosNovoProduto(listaCadastro)
@@ -80,13 +87,13 @@ class CadastroProdutoTela2Fragment : Fragment(), ProdutosNovosInsterface {
     private fun verificarModelo() {
         val modelo = view?.findViewById<TextInputEditText>(R.id.editTextCadastroModelo)?.text.toString()
         if (modelo.isNotEmpty()){
-            listaCadastro.put("modelo", modelo)
+            listaCadastro.put(MODELO, modelo)
         }
     }
 
     private fun atualizarListaCadastro() {
-        val ehNovidade : String = if (verificarNovidade()) "sim" else "nao"
-        listaCadastro.put("novidade", ehNovidade)
+        val ehNovidade : String = if (verificarNovidade()) SIM else NAO
+        listaCadastro.put(NOVIDADE, ehNovidade)
     }
 
     private fun verificarNovidade() : Boolean{

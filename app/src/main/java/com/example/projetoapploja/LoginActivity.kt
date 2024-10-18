@@ -1,5 +1,9 @@
 package com.example.projetoapploja
 
+import EMAIL_NAO_CADATRADO
+import EMAIL_SENHA_INVALIDO
+import ERRO_SENHA_VAZIA
+import USUARIO_LOGADO_SUCESSO
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -50,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithEmailAndPassword(
             email, senha
         ).addOnSuccessListener {
-            exibirMensagem("Logado com sucesso!")
+            exibirMensagem(USUARIO_LOGADO_SUCESSO)
             if (validarSuperUsuario(email,senha)) {
                 startActivity(Intent(this, TelaAdministrativaActivity::class.java))
             }else if (email=="jose@gmail.com" && senha=="12345678"){
@@ -64,10 +68,10 @@ class LoginActivity : AppCompatActivity() {
                 throw erro
             } catch (erroUsuarioInvalido: FirebaseAuthInvalidUserException) {
                 erroUsuarioInvalido.printStackTrace()
-                exibirMensagem("Email não cadastrado.")
+                exibirMensagem(EMAIL_NAO_CADATRADO)
             } catch (erroCredenciaisInvalidas: FirebaseAuthInvalidCredentialsException) {
                 erroCredenciaisInvalidas.printStackTrace()
-                exibirMensagem("E-mail ou senha inválidos.")
+                exibirMensagem(EMAIL_SENHA_INVALIDO)
             }
         }
     }
@@ -82,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.textInputLoginSenha.error = null
                 return true
             }else{
-                binding.textInputLoginSenha.error = "Senha não pode ser vazia."
+                binding.textInputLoginSenha.error = ERRO_SENHA_VAZIA
                 return false
             }
         }else{

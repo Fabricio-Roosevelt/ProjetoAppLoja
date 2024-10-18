@@ -1,5 +1,12 @@
 package com.example.projetoapploja
 
+import ADMINISTRADORES
+import ERRO_EMAIL_DUPLICADO
+import ERRO_EMAIL_INVALIDO
+import ERRO_EMAIL_VAZIO
+import FUNCIONARIOS
+import USUARIO_CADASTRO_SUCESSO
+import USUARIO_ERRO_CADASTRO
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -91,7 +98,7 @@ class TelaAdministrativaActivity : AppCompatActivity() {
             binding.textInputAdministrativaEmail.error = null
             return true
         }else{
-            binding.textInputAdministrativaEmail.error = "Nome não pode ser vazio."
+            binding.textInputAdministrativaEmail.error = ERRO_EMAIL_VAZIO
             return false
         }
     }
@@ -116,10 +123,10 @@ class TelaAdministrativaActivity : AppCompatActivity() {
                     throw erro
                 } catch (erroUsuarioExistente: FirebaseAuthUserCollisionException) {
                     erroUsuarioExistente.printStackTrace()
-                    exibirMensagem("E-mail já percente a outro usuário")
+                    exibirMensagem(ERRO_EMAIL_DUPLICADO)
                 } catch (erroCredenciaisInvalidas: FirebaseAuthInvalidCredentialsException) {
                     erroCredenciaisInvalidas.printStackTrace()
-                    exibirMensagem("E-mail inválido, digite um outro e-mail")
+                    exibirMensagem(ERRO_EMAIL_INVALIDO)
                 }
             }
         }
@@ -128,19 +135,19 @@ class TelaAdministrativaActivity : AppCompatActivity() {
     private fun salvarFuncionarioFirestores(usuario: Usuario) {
         firestore
             .collection( if (binding.rbAdministrador.isChecked){
-                "administradores"
+                ADMINISTRADORES
             }else{
-                "funcionarios"
+                FUNCIONARIOS
             }
             )
             .document(usuario.id)
             .set(usuario)
             .addOnSuccessListener {
-                exibirMensagem("Usuario cadastrado com sucesso!")
+                exibirMensagem(USUARIO_CADASTRO_SUCESSO)
                 //startActivity(Intent(applicationContext, LoginActivity::class.java))
 
             }.addOnFailureListener {
-                exibirMensagem("Erro ao fazer seu cadastro.")
+                exibirMensagem(USUARIO_ERRO_CADASTRO)
             }
     }
 

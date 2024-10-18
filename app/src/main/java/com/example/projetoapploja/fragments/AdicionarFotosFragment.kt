@@ -1,5 +1,7 @@
 package com.example.projetoapploja.fragments
 
+import FOTOS
+import ID_PASTA_FOTOS
 import android.content.Context
 import android.net.Uri
 import android.os.Build
@@ -75,7 +77,7 @@ class AdicionarFotosFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // capturar idProduto para ser o nome da pasta para salvar fotos
-        idPasta = arguments?.getString("idPastaDeFotos")
+        idPasta = arguments?.getString(ID_PASTA_FOTOS)
     }
 
     override fun onCreateView(
@@ -128,7 +130,7 @@ class AdicionarFotosFragment() : Fragment() {
             val fileName = UUID.randomUUID().toString() + ".jpg"
             //val fileName = nomearArquivo()
             val imageRef = armazenamento
-                .getReference("fotos")
+                .getReference(FOTOS)
                 .child("$idPasta/$fileName")
             imageRef.putFile(uri)
                 .addOnSuccessListener {

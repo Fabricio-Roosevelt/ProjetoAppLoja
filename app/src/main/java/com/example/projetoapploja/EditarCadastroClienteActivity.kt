@@ -1,5 +1,14 @@
 package com.example.projetoapploja
 
+import CANCELAR
+import CLIENTES
+import DELETAR
+import EDITAR
+import EMAIL
+import ERRO_CLIENTE_INVALIDO
+import ERRO_DESCONHECIDO
+import ERRO_EMAIL_VAZIO
+import USER_ID
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -33,11 +42,11 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
 
     private fun eventosClique() {
         binding.btnEditarClienteConfirmar.setOnClickListener {
-            opcao = "editar"
+            opcao = EDITAR
             verificarCadastro(opcao)
         }
         binding.btnEditarClienteExluir.setOnClickListener {
-            opcao = "deletar"
+            opcao = DELETAR
             verificarCadastro(opcao)
         }
         binding.btnEditarClienteCancelar.setOnClickListener {
@@ -59,7 +68,7 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
                 false
             }
         }else{
-            binding.editInputEditarEmailCliente.error = "Email não pode ser vazio."
+            binding.editInputEditarEmailCliente.error = ERRO_EMAIL_VAZIO
             return false
         }
     }
@@ -68,13 +77,13 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
         var contagem = 0
         emailCliente = binding.editInputEditarEmailCliente.text.toString()
         if (verificarEmail()) {
-            firestore.collection("clientes")
+            firestore.collection(CLIENTES)
                 .get()
                 .addOnSuccessListener { result ->
                     result.forEach {
-                        val emailComparacao = it.data.get("email").toString()
+                        val emailComparacao = it.data.get(EMAIL).toString()
                         if (emailComparacao == emailCliente) {
-                            val idCliente = it.data.get("userId").toString()
+                            val idCliente = it.data.get(USER_ID).toString()
                             //Log.i("saida", "Email encontrado, confirma edição?")
                            // Log.i("saida", "Verifica cadastro: ${it.data.get("userId")} - $opcao")
                             alertaDialogo(idCliente,opcao)
@@ -84,10 +93,10 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
                         }
                     }
                     if (contagem != 0){
-                        exibirMensagem("Não existe cliente cadastrado com este email.")
+                        exibirMensagem(ERRO_CLIENTE_INVALIDO)
                     }
                 }.addOnFailureListener {
-                    Log.d("saida", "Error desconhecido.")
+                    Log.d("saida", ERRO_DESCONHECIDO)
                 }
         }else{
             exibirMensagem("Email e/ou formato invalido. " +
@@ -101,21 +110,21 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
         val novaOpcao = opcao
         val alertBuilder = AlertDialog.Builder(this)
         alertBuilder.setTitle(
-            if (opcao == "deletar")
+            if (opcao == DELETAR)
                 {"Confirmar exclusão do usuário"
             }else {"Confirma edição do usuario."
             })
             .setMessage(
-                if (opcao == "deletar")
+                if (opcao == DELETAR)
                     {"Todos dados referentes ao usuario serão removidos."
                 }else {"Você poderá editar seus dados novamente."
                 })
-            .setNegativeButton("Cancelar"){dialog, posicao ->
+            .setNegativeButton(CANCELAR){dialog, posicao ->
                 exibirMensagem("Você cancelou a ação.")
             }.setPositiveButton(
-                if (opcao == "deletar") "REMOVER" else "Editar"){dialog, posicao ->
+                if (opcao == DELETAR) "REMOVER" else EDITAR){dialog, posicao ->
                 exibirMensagem(
-                    if (opcao == "deletar")
+                    if (opcao == DELETAR)
                     {"Você removeu o usuario."
                     }else {"Você será redirecionado para edição cadastro."
                     }
@@ -128,17 +137,17 @@ class EditarCadastroClienteActivity : AppCompatActivity() {
     }
 
     private fun editarExcluirEmail(idCliente: String, opcao: String) {
-        val referencia = firestore.collection("clientes").document(idCliente)
-        if (opcao == "deletar") {
+        val referencia = firestore.collection(CLIENTES).document(idCliente)
+        if (opcao == DELETAR) {
             referencia.delete()
             Log.i("saida", "Email excluido com sucesso.")
             startActivity(Intent(this, PrimeiraTelaActivity::class.java))
-        }else if (opcao == "editar"){
+        }else if (opcao == EDITAR){
             referencia.delete()
             Log.i("saida", "Redirecionando para edição.")
             startActivity(Intent(this, CadastroClienteActivity::class.java))
         }else{
-            Log.i("saida","resposta nula - algo deu errado!!")
+            Log.i("saida",ERRO_DESCONHECIDO)
         }
     }
 

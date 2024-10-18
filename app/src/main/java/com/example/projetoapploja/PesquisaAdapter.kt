@@ -29,7 +29,7 @@ class PesquisaAdapter(
     override fun onBindViewHolder(holder: PesquisaViewHolder, position: Int) {
         val produto = listaResultados[position]
 
-        holder.marcaView.text = produto.marca
+        holder.marcaView.text = produto.marca.uppercase()
         holder.tipoView.text = produto.tipo
         holder.generoView.text = produto.genero
 

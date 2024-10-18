@@ -1,5 +1,13 @@
 package com.example.projetoapploja.fragments
 
+import GENERO
+import ID_PRODUTO
+import IMAGEM_URL
+import MARCA
+import MODELO
+import PESQUISAR
+import PRODUTOS
+import TIPO
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +23,7 @@ import com.example.projetoapploja.models.ExibirPesquisa
 import com.google.firebase.firestore.FirebaseFirestore
 
 
+
 class ResultadoPesquisaFragment : Fragment() {
 
     private var listaPesquisa = mutableListOf<String>()
@@ -26,6 +35,7 @@ class ResultadoPesquisaFragment : Fragment() {
     private lateinit var marcaProduto: String
     private lateinit var tipoProduto: String
     private lateinit var generoProduto: String
+    private lateinit var listField: List<String>
     private val firestore by lazy {
         FirebaseFirestore.getInstance()
     }
@@ -49,24 +59,43 @@ class ResultadoPesquisaFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         val args = this.arguments
-        listaPesquisa.add(args?.getString("pesquisar").toString())
+        listaPesquisa.add(args?.getString(PESQUISAR).toString().lowercase())
         pesquisarFirebase(args)
     }
 
     private fun pesquisarFirebase(args: Bundle?) {
-        val nomePesquisa = args?.getString("pesquisar")
+        val nomePesquisa = args?.getString(PESQUISAR).toString().lowercase()
         pesquisarPorMarca(nomePesquisa)
-
+        //pesquisaGenerica(nomePesquisa)
     }
 
-    private fun pesquisarPorTipo(nomePesquisa: String?){
-        val referencia = firestore.collection("produtos")
-        Log.i("saida","no tipo: $nomePesquisa")
-        val query = referencia.whereEqualTo("tipo", nomePesquisa)
+    private fun pesquisaPorModelo(nomePesquisa: String) {
+        val referencia = firestore.collection(PRODUTOS)
+        val query = referencia.whereGreaterThanOrEqualTo(MODELO,"$nomePesquisa")
+            .whereLessThanOrEqualTo(MODELO, nomePesquisa + "\uf8ff")
         query.addSnapshotListener { querySnapshop, erro ->
             val documentos = querySnapshop?.documents
             documentos?.forEach { documentSnapshot ->
-                val idAchado = documentSnapshot.get("idProduto").toString()
+                val idAchado = documentSnapshot.get(ID_PRODUTO).toString()
+                listaIdResultado.add(idAchado)
+                Log.i("saida","ids: $listaIdResultado")
+            }
+            if (listaIdResultado.isNotEmpty()){
+                resultadoFirebase(listaIdResultado)
+            }else{
+                Log.i("saida","Nenhum item encontrado")
+            }
+        }
+    }
+
+    private fun pesquisarPorTipo(nomePesquisa: String){
+        val referencia = firestore.collection(PRODUTOS)
+        val query = referencia.whereGreaterThanOrEqualTo(TIPO,"$nomePesquisa")
+            .whereLessThanOrEqualTo(TIPO, nomePesquisa + "\uf8ff")
+        query.addSnapshotListener { querySnapshop, erro ->
+            val documentos = querySnapshop?.documents
+            documentos?.forEach { documentSnapshot ->
+                val idAchado = documentSnapshot.get(ID_PRODUTO).toString()
                 listaIdResultado.add(idAchado)
                 Log.i("saida","ids: $listaIdResultado")
             }
@@ -78,31 +107,32 @@ class ResultadoPesquisaFragment : Fragment() {
         }
     }
 
-    private fun pesquisarPorGenero(nomePesquisa: String?) {
-        val referencia = firestore.collection("produtos")
-        Log.i("saida","no tipo: $nomePesquisa")
-        val query = referencia.whereEqualTo("genero", nomePesquisa)
+    private fun pesquisarPorGenero(nomePesquisa: String) {
+        val referencia = firestore.collection(PRODUTOS)
+        val query = referencia.whereGreaterThanOrEqualTo(GENERO,"$nomePesquisa")
+            .whereLessThanOrEqualTo(GENERO, nomePesquisa + "\uf8ff")
         query.addSnapshotListener { querySnapshop, erro ->
             val documentos = querySnapshop?.documents
             documentos?.forEach { documentSnapshot ->
-                val idAchado = documentSnapshot.get("idProduto").toString()
+                val idAchado = documentSnapshot.get(ID_PRODUTO).toString()
                 listaIdResultado.add(idAchado)
             }
             if (listaIdResultado.isNotEmpty()){
                 resultadoFirebase(listaIdResultado)
             }else{
-                Log.i("saida","Nenhum item encontrado")
+                pesquisaPorModelo(nomePesquisa)
             }
         }
     }
 
-    private fun pesquisarPorMarca(nomePesquisa: String?) {
-        val referencia = firestore.collection("produtos")
-        val query = referencia.whereEqualTo("marca", nomePesquisa)
+    private fun pesquisarPorMarca(nomePesquisa: String) {
+        val referencia = firestore.collection(PRODUTOS)
+        val query = referencia.whereGreaterThanOrEqualTo(MARCA,nomePesquisa)
+            .whereLessThanOrEqualTo(MARCA, nomePesquisa + "\uf8ff")
         query.addSnapshotListener { querySnapshop, erro ->
             val documentos = querySnapshop?.documents
             documentos?.forEach { documentSnapshot ->
-                val idAchado = documentSnapshot.get("idProduto").toString()
+                val idAchado = documentSnapshot.get(ID_PRODUTO).toString()
                 listaIdResultado.add(idAchado)
             }
             if (listaIdResultado.isNotEmpty()){
@@ -114,16 +144,16 @@ class ResultadoPesquisaFragment : Fragment() {
     }
 
     fun resultadoFirebase(listaIdResultado: MutableList<String>) {
-        val referencia = firestore.collection("produtos")
+        val referencia = firestore.collection(PRODUTOS)
         for (item in listaIdResultado){
             referencia.document(item)
                 .get()
                 .addOnSuccessListener { document ->
-                    idProduto = document.data?.get("idProduto").toString()
-                    marcaProduto = document.data?.get("marca").toString()
-                    tipoProduto = document.data?.get("tipo").toString()
-                    generoProduto = document.data?.get("genero").toString()
-                    val uriList = document.data?.get("imagemUrl") as MutableList<String>
+                    idProduto = document.data?.get(ID_PRODUTO).toString()
+                    marcaProduto = document.data?.get(MARCA).toString()
+                    tipoProduto = document.data?.get(TIPO).toString()
+                    generoProduto = document.data?.get(GENERO).toString()
+                    val uriList = document.data?.get(IMAGEM_URL) as MutableList<String>
                     val imagem = uriList[0]
                     val produto = ExibirPesquisa(idProduto,marcaProduto,tipoProduto,generoProduto,imagem)
                     listaProdutos.add(produto)

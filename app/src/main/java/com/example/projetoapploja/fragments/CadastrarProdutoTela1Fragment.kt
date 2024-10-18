@@ -1,5 +1,14 @@
 package com.example.projetoapploja.fragments
 
+import FEMININO
+import INFANTIL
+import MARCA
+import MASCULINO
+import OCULOS_DE_GRAU
+import OCULOS_SOLAR
+import SEXO
+import TIPO
+import UNISSEX
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +25,7 @@ import com.example.projetoapploja.R
 class CadastrarProdutoTela1Fragment : Fragment() {
 
     lateinit var btnAvancar : Button
-    var listaCadastro = mutableMapOf("marca" to "", "tipo" to "", "sexo" to "")
+    var listaCadastro = mutableMapOf(MARCA to "", TIPO to "", SEXO to "")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,12 +63,12 @@ class CadastrarProdutoTela1Fragment : Fragment() {
 
     private fun enviarDadosCapturados() {
         val bundle = Bundle()
-        val marcaEscolhida : String = listaCadastro.get("marca").toString()
-        val tipoOculos : String = listaCadastro.get("tipo").toString()
-        val generoOculos : String = listaCadastro.get("sexo").toString()
-        bundle.putString("marca", marcaEscolhida)
-        bundle.putString("tipo", tipoOculos)
-        bundle.putString("sexo", generoOculos)
+        val marcaEscolhida : String = listaCadastro.get(MARCA).toString()
+        val tipoOculos : String = listaCadastro.get(TIPO).toString()
+        val generoOculos : String = listaCadastro.get(SEXO).toString()
+        bundle.putString(MARCA, marcaEscolhida)
+        bundle.putString(TIPO, tipoOculos)
+        bundle.putString(SEXO, generoOculos)
 
         val fragment = CadastroProdutoTela2Fragment()
         fragment.arguments = bundle
@@ -73,7 +82,7 @@ class CadastrarProdutoTela1Fragment : Fragment() {
         val marcaSelecionada = view?.findViewById<Spinner>(R.id.spinnerMarcas)?.selectedItem.toString()
         val marcaPosicao = view?.findViewById<Spinner>(R.id.spinnerMarcas)?.selectedItemPosition
         if (marcaPosicao != 0) {
-            listaCadastro.put("marca", marcaSelecionada)
+            listaCadastro.put(MARCA, marcaSelecionada)
             return true
         } else{
             Toast.makeText(requireContext(),
@@ -87,23 +96,23 @@ class CadastrarProdutoTela1Fragment : Fragment() {
         val idItemSelecionado = view?.findViewById<RadioGroup>(R.id.rgSexo)?.checkedRadioButtonId
         val itemSelecionado: String?
         if (idItemSelecionado == R.id.rbMasculino) {
-            itemSelecionado = "Masculino"
-            listaCadastro.put("sexo", itemSelecionado)
+            itemSelecionado = MASCULINO
+            listaCadastro.put(SEXO, itemSelecionado)
             return true
         }
         else if (idItemSelecionado == R.id.rbFeminino) {
-            itemSelecionado = "Feminino"
-            listaCadastro.put("sexo", itemSelecionado)
+            itemSelecionado = FEMININO
+            listaCadastro.put(SEXO, itemSelecionado)
             return true
         }
         else if (idItemSelecionado == R.id.rbUnissex) {
-            itemSelecionado = "Unissex"
-            listaCadastro.put("sexo", itemSelecionado)
+            itemSelecionado = UNISSEX
+            listaCadastro.put(SEXO, itemSelecionado)
             return true
         }
         else if (idItemSelecionado == R.id.rbInfantil) {
-            itemSelecionado = "Infantil"
-            listaCadastro.put("sexo", itemSelecionado)
+            itemSelecionado = INFANTIL
+            listaCadastro.put(SEXO, itemSelecionado)
             return true
         }
         else {
@@ -119,13 +128,13 @@ class CadastrarProdutoTela1Fragment : Fragment() {
         val tipoSelecionadoGrau: String?
         when( idtipoSelecionadoGrau) {
             R.id.rbOculosGrau -> {
-                tipoSelecionadoGrau = "Oculus de grau"
-                listaCadastro.put("tipo", tipoSelecionadoGrau)
+                tipoSelecionadoGrau = OCULOS_DE_GRAU
+                listaCadastro.put(TIPO, tipoSelecionadoGrau)
                 return true
             }
             R.id.rbOculosSolar -> {
-                tipoSelecionadoGrau = "Oculos solar"
-                listaCadastro.put("tipo", tipoSelecionadoGrau)
+                tipoSelecionadoGrau = OCULOS_SOLAR
+                listaCadastro.put(TIPO, tipoSelecionadoGrau)
                 return true
             }
             else -> {

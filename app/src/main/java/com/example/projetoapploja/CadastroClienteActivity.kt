@@ -1,5 +1,13 @@
 package com.example.projetoapploja
 
+import CLIENTES
+import CLIENTE_CADASTRO_SUCESSO
+import EMAIL
+import ERRO_EMAIL_VAZIO
+import ERRO_NOME_VAZIO
+import ERRO_TELEFONE_INVALIDO
+import ERRO_TELEFONE_VAZIO
+import USUARIO_ERRO_CADASTRO
 import android.content.Intent
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
@@ -80,7 +88,7 @@ class CadastroClienteActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: Exception) {
-                Log.i("saida", "Erro ao adicionar numero.")
+                Log.i("saida", ERRO_TELEFONE_INVALIDO)
             }
         }
         return false
@@ -93,7 +101,7 @@ class CadastroClienteActivity : AppCompatActivity() {
         } else if (incluirWhatsApp() && telefone.isNotEmpty()){
             confirmaInclusaoCliente()
         }else {
-            Log.d("saida", "Não pode confirmar inclusão, não pode ser vazio.")
+            Log.d("saida", ERRO_TELEFONE_VAZIO)
         }
     }
 
@@ -103,7 +111,7 @@ class CadastroClienteActivity : AppCompatActivity() {
             binding.textInputTelefoneCliente.error = null
             return true
         }else{
-            binding.textInputTelefoneCliente.error = "Telefone não pode ser VAZIO."
+            binding.textInputTelefoneCliente.error = ERRO_TELEFONE_VAZIO
             return false
         }
     }
@@ -115,7 +123,7 @@ class CadastroClienteActivity : AppCompatActivity() {
                 val numeroTefefoneFormatado = PhoneNumberUtils.formatNumberToE164(telefoneCliente, "BR")
                 return numeroTefefoneFormatado
             } catch (e: Exception) {
-                exibirMensagem("Numero invalido. \nDigite com o DDD (Ex: 84) e sem espaço entre os números.")
+                exibirMensagem(ERRO_TELEFONE_INVALIDO)
             }
         }
         return ""
@@ -127,7 +135,7 @@ class CadastroClienteActivity : AppCompatActivity() {
             binding.textInputNomeCliente.error = null
             return true
         }else{
-            binding.textInputNomeCliente.error = "Nome não pode ser vazio."
+            binding.textInputNomeCliente.error = ERRO_NOME_VAZIO
             return false
         }
     }
@@ -146,7 +154,7 @@ class CadastroClienteActivity : AppCompatActivity() {
                 false
             }
         }else{
-            binding.editTextEmailCliente.error = "Email não pode ser vazio."
+            binding.editTextEmailCliente.error = ERRO_EMAIL_VAZIO
             return false
         }
     }
@@ -160,11 +168,11 @@ class CadastroClienteActivity : AppCompatActivity() {
 
     private fun verificarDuplicidadeEmail() {
         var emailsIguais = 0
-        firestore.collection("clientes")
+        firestore.collection(CLIENTES)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val emailComparacao = document.data.get("email").toString()
+                    val emailComparacao = document.data.get(EMAIL).toString()
                     if (emailComparacao == emailCliente) {
                         emailsIguais += 1
                     }
@@ -186,7 +194,7 @@ class CadastroClienteActivity : AppCompatActivity() {
     }
 
     private fun confirmaInclusaoCliente() {
-        val referencia = firestore.collection("clientes").document()
+        val referencia = firestore.collection(CLIENTES).document()
         val idUsuario = referencia.id
         val recerNovidadeEmail = listaQuerReceberNovidades()
         val reberWhatsApp = incluirWhatsApp()
@@ -202,15 +210,15 @@ class CadastroClienteActivity : AppCompatActivity() {
         )
         if (verificarEmail() && verificarNome()){
             firestore
-                .collection( "clientes")
+                .collection(CLIENTES)
                 .document(idUsuario)
                 .set(cliente)
                 .addOnSuccessListener {
-                    exibirMensagem("Cliente cadastrado com sucesso!")
+                    exibirMensagem(CLIENTE_CADASTRO_SUCESSO)
                     limparCampos()
                     //startActivity(Intent(applicationContext, LoginActivity::class.java))
                 }.addOnFailureListener {
-                    exibirMensagem("Erro ao fazer seu cadastro.")
+                    exibirMensagem(USUARIO_ERRO_CADASTRO)
                 }
         } else{
             exibirMensagem("Email e/ou formato invalido. " +

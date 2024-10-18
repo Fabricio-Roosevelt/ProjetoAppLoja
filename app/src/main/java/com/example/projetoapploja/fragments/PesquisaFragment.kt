@@ -1,5 +1,6 @@
 package com.example.projetoapploja.fragments
 
+import PESQUISAR
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -54,7 +55,7 @@ class PesquisaFragment : Fragment() {
 
     private fun enviarDadosParaPesquisa(result: String) {
         val bundle = Bundle()
-        bundle.putString("pesquisar", result)
+        bundle.putString(PESQUISAR, result)
 
         val fragment = ResultadoPesquisaFragment()
         fragment.arguments = bundle

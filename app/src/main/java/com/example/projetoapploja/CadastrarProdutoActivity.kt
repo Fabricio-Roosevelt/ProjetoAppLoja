@@ -1,5 +1,17 @@
 package com.example.projetoapploja
 
+import ERRO_UP_LOAD_IMAGENS_FIREBASE
+import ID_PASTA_FOTOS
+import IMAGEM_URL
+import INSERIR_FOTOS_PRODUTO
+import MARCA
+import MODELO
+import NOVIDADE
+import PRODUTOS
+import PRODUTO_ERRO_CADASTRO
+import SEXO
+import TIPO
+import UP_LOAD_IMAGENS_FIREBASE
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -61,13 +73,13 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
     }
 
     override fun transferirDadosNovoProduto(mensagem: MutableMap<String, String>) {
-        val referencia = firestore.collection("produtos").document()
+        val referencia = firestore.collection(PRODUTOS).document()
         val idProduto = referencia.id
-        val marcaProduto = "${mensagem.get("marca")}"
-        val tipoProdtuo = "${mensagem.get("tipo")}"
-        val generoProduto = "${mensagem.get("sexo")}"
-        val novidadeProduto = "${mensagem.get("novidade")}"
-        val modeloProduto = "${mensagem.get("modelo")}"
+        val marcaProduto = "${mensagem.get(MARCA)}".lowercase()
+        val tipoProdtuo = "${mensagem.get(TIPO)}".lowercase()
+        val generoProduto = "${mensagem.get(SEXO)}".lowercase()
+        val novidadeProduto = "${mensagem.get(NOVIDADE)}".lowercase()
+        val modeloProduto = "${mensagem.get(MODELO)}".lowercase()
 
         val produto = Produto(
             idProduto,
@@ -99,25 +111,25 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
     // atualiza array de imagens na tabela do firebase
     private fun atualizarImagens(listaImagens: MutableList<String>) {
         val listaAtualizada = listaImagens
-        val docReferencia = firestore.collection("produtos").document(pastaProdutos)
-        docReferencia.update("imagemUrl", listaAtualizada)
+        val docReferencia = firestore.collection(PRODUTOS).document(pastaProdutos)
+        docReferencia.update(IMAGEM_URL, listaAtualizada)
             .addOnSuccessListener {
-                exibirMensagem("Imagens atualizadas no Banco de dados")
+                exibirMensagem(UP_LOAD_IMAGENS_FIREBASE)
                 listaImagens.clear()
                 atualizarPastasDocumentos()
             }.addOnFailureListener {
-                exibirMensagem("Não foi possivel atualizar")
+                exibirMensagem(ERRO_UP_LOAD_IMAGENS_FIREBASE)
             }
     }
 
     // remover quaisquer cadastro adicionados sem imagens
     private fun atualizarPastasDocumentos(){
-        val colecaoReferencia = firestore.collection("produtos")
+        val colecaoReferencia = firestore.collection(PRODUTOS)
         colecaoReferencia.get()
             .addOnSuccessListener { resultado ->
                 if(!resultado.isEmpty){
                     for (documento in resultado){
-                        val imagensProdutos = documento.data.getValue("imagemUrl") as? ArrayList<String>
+                        val imagensProdutos = documento.data.getValue(IMAGEM_URL) as? ArrayList<String>
                         if (imagensProdutos != null){
                             if (imagensProdutos.isEmpty()){
                                 colecaoReferencia.document(documento.id)
@@ -145,14 +157,14 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
         }
         //Log.i("saida","$produto")
         firestore
-            .collection( "produtos")
+            .collection( PRODUTOS)
             .document(produto.idProduto)
             .set(produto)
             .addOnSuccessListener {
-                exibirMensagem("Favor inserir as fotos do produto.")
+                exibirMensagem(INSERIR_FOTOS_PRODUTO)
                 val adicionarFotosFragment = AdicionarFotosFragment()
                 val bundle = bundleOf(
-                    "idPastaDeFotos" to produto.idProduto
+                    ID_PASTA_FOTOS to produto.idProduto
                 )
                 adicionarFotosFragment.arguments = bundle
                 supportFragmentManager.beginTransaction()
@@ -160,7 +172,7 @@ class CadastrarProdutoActivity : AppCompatActivity(), ProdutosNovosInsterface, A
                     .addToBackStack(null)
                     .commit()
             }.addOnFailureListener {
-                exibirMensagem("Erro ao fazer seu cadastro.")
+                exibirMensagem(PRODUTO_ERRO_CADASTRO)
             }
         pastaProdutos = produto.idProduto
     }
